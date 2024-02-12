@@ -72,12 +72,12 @@ public class Server implements HttpHandler {
                 json.put(Prams.CODE, Code.SUCCESS);
                 json.put(Prams.POINT, point.check(map.get(Prams.QQ)));
                 json.put(Prams.RANK, point.getRank(map.get(Prams.QQ)));
-                System.out.println("查询积分" + map.get(Prams.QQ) + "：" + json.get(Prams.POINT));
+                Logger.info("查询积分" + map.get(Prams.QQ) + "：" + json.get(Prams.POINT));
             }
             case Prams.TOP -> {
                 json.put(Prams.CODE, Code.SUCCESS);
                 json.put(Prams.MSG, point.getRankList());
-                System.out.println("获取排行榜");
+                Logger.info("获取排行榜");
             }
             case Prams.SUB -> {
                 if (point.sub(Long.parseLong(map.get(Prams.QQ)), Integer.parseInt(map.get(Prams.POINT)))) {
@@ -85,12 +85,12 @@ public class Server implements HttpHandler {
                 } else {
                     json.put(Prams.CODE, Code.UNCHANGED);
                 }
-                System.out.println("消耗积分" + map.get(Prams.QQ) + ":" + map.get(Prams.POINT));
+                Logger.info("消耗积分" + map.get(Prams.QQ) + ":" + map.get(Prams.POINT));
             }
             case Prams.PLUS -> {
                 point.plus(Long.parseLong(map.get(Prams.QQ)), Integer.parseInt(map.get(Prams.POINT)));
                 json.put(Prams.CODE, Code.SUCCESS);
-                System.out.println("获得积分" + map.get(Prams.QQ) + ":" + map.get(Prams.POINT));
+                Logger.info("获得积分" + map.get(Prams.QQ) + ":" + map.get(Prams.POINT));
             }
             case Prams.CONFIRM -> {
                 if (map.containsKey(Prams.CODE) && map.containsKey(Prams.PLAYER)) {
@@ -109,10 +109,10 @@ public class Server implements HttpHandler {
                                 .html(msg)
                                 .send();
                     } catch (SendMailException e) {
-                        System.out.println("发送邮件失败：" + e.getMessage());
+                        Logger.info("发送邮件失败：" + e.getMessage());
                     }
                     json.put(Prams.CODE, Code.SUCCESS);
-                    System.out.println("发出广播" + map.get(Prams.QQ) + ":" + msg);
+                    Logger.info("发出广播" + map.get(Prams.QQ) + ":" + msg);
                 } else {
                     json.put(Prams.CODE, Code.UNKOWN_REQUEST);
                 }

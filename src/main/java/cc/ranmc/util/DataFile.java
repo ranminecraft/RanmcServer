@@ -12,7 +12,7 @@ public class DataFile {
             File file = new File(System.getProperty("user.dir") + "/config/" + name + ".txt");
             return FileUtils.fileRead(file, "utf8");
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            Logger.info(e.getMessage());
             return "";
         }
     }
@@ -22,7 +22,7 @@ public class DataFile {
             File file = new File(System.getProperty("user.dir") + "/config/" + name + ".txt");
             FileUtils.fileWrite(file, text);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            Logger.info(e.getMessage());
         }
     }
 }

@@ -22,11 +22,11 @@ public class ConfirmUtil {
             Confirm confirm = confirmMap.get(qq);
             if (confirm.isPass()) {
                 confirmMap.remove(qq);
-                System.out.println("成功" + action + "：" + player + "(" + qq + ")");
+                Logger.info("成功" + action + "：" + player + "(" + qq + ")");
                 return Code.SUCCESS;
             } else if (confirm.getTime() < new Date().getTime()) {
                 confirmMap.remove(qq);
-                System.out.println("等待确认超时：" + qq);
+                Logger.info("等待确认超时：" + qq);
                 return Code.TIME_OUT;
             }
         } else {
@@ -47,8 +47,8 @@ public class ConfirmUtil {
                                 .replace("%action%", action))
                         .send();
             } catch (SendMailException e) {
-                System.out.println(e.getMessage());
-                System.out.println("发送邮件失败");
+                Logger.info(e.getMessage());
+                Logger.info("发送邮件失败");
                 return Code.ERROR;
             }
         }

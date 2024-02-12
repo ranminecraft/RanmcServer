@@ -1,6 +1,7 @@
 package cc.ranmc;
 
 import cc.ranmc.network.Server;
+import cc.ranmc.util.Logger;
 import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.spi.HttpServerProvider;
 import io.github.biezhi.ome.OhMyEmail;
@@ -34,10 +35,10 @@ public final class Main {
             httpserver.setExecutor(null);
             httpserver.start();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Logger.info(e.getMessage());
         }
 
-        System.out.println("已成功运行在端口" + PORT);
+        Logger.info("已成功运行在端口" + PORT);
 
         // 初始化邮件
         OhMyEmail.config(OhMyEmail.SMTP_QQ(false), "ranica@qq.com", EMAIL);
