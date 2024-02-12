@@ -14,17 +14,20 @@ public class Logger {
         SimpleDateFormat timeFormat = new SimpleDateFormat("[HH:mm:ss] ");
         Date date = new Date();
         text = timeFormat.format(date) + text;
-        Logger.info(text);
+        System.out.println(text);
         try {
-            File file = new File(System.getProperty("user.dir") + File.separator + "log" + File.separator + dateFormat.format(date) + ".txt");
+            File directory = new File(System.getProperty("user.dir") + File.separator + "log");
+            if (!directory.exists()) directory.mkdir();
+            File file = new File(directory.getPath() + File.separator + dateFormat.format(date) + ".txt");
             String orgin = "";
             if (file.exists()) {
-                file.getCanonicalFile();
                 orgin = FileUtils.fileRead(file, "UTF-8");
+            } else {
+                file.createNewFile();
             }
-            FileUtils.fileWrite(file, "UTF-8", orgin + "\n" + text);
+            FileUtils.fileWrite(file, "UTF-8", (orgin.isEmpty() ? "" : orgin + "\n") + text);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 }
