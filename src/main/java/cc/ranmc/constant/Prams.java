@@ -18,4 +18,9 @@ public class Prams {
     public static final String BROADCAST = "broadcast";
     public static final String VERIFY = "verify";
     public static final String KEY = "key";
+    public static final String PAGE = "page";
+    public static final String TOTAL = "total";
+    public static final String TOTAL_NOT_FILTERED = "totalNotFiltered";
+    public static final String ROWS = "rows";
+
 }

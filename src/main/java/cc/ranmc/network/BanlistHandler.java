@@ -1,0 +1,80 @@
+package cc.ranmc.network;
+
+import cc.ranmc.constant.Code;
+import cc.ranmc.constant.Prams;
+import cc.ranmc.entries.SQLite;
+import cc.ranmc.util.DataFile;
+import cc.ranmc.util.Logger;
+import cn.hutool.http.ContentType;
+import cn.hutool.http.server.HttpServerRequest;
+import cn.hutool.http.server.HttpServerResponse;
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
+
+public class BanlistHandler {
+
+    private final SQLite data = new SQLite(DataFile.read("sqlite"));
+    private int lastUpdate = -1;
+    private JSONArray banlist;
+    public void handle(HttpServerRequest req, HttpServerResponse res) {
+        res.setHeader("Access-Control-Allow-Origin", "https://www.ranmc.cc");
+        res.setHeader("Access-Control-Allow-Methods", "GET");
+        res.setHeader("Access-Control-Max-Age", "3600");
+        res.setHeader("Access-Control-Allow-Headers", "x-requested-with");
+        Logger.info(req.getClientIP("X-Real-IP") + "请求封禁列表");
+        JSONObject json = new JSONObject();
+        if (!req.getMethod().equals("GET") || !req.getParams().containsKey(Prams.PAGE)) {
+            json.set(Prams.CODE, Code.UNKOWN_REQUEST);
+            res.write(json.toString(), ContentType.JSON.toString());
+            return;
+        }
+        int page = 1;
+        try {
+            page = Integer.parseInt(req.getParams(Prams.PAGE).getFirst());
+            if (page < 1) page = 1;
+        } catch (NumberFormatException ignore) {}
+        json.set(Prams.CODE, Code.SUCCESS);
+        updateBanlist();
+        json.set(Prams.TOTAL, banlist.size());
+        json.set(Prams.TOTAL_NOT_FILTERED, banlist.size());
+        JSONArray array = new JSONArray();
+        page = (page - 1) * 20;
+        for (int i = page; i < page + 20; i++) {
+            if (i >= banlist.size()) break;
+            array.put(banlist.get(i));
+        }
+        json.set(Prams.ROWS, array);
+        res.write(json.toString(), ContentType.JSON.toString());
+    }
+
+    private void updateBanlist() {
+        int day = LocalDateTime.now().getDayOfYear();
+        if (lastUpdate == day) return;
+        lastUpdate = day;
+        banlist = new JSONArray();
+        AtomicInteger id = new AtomicInteger();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        data.findList("BANLIST").forEach(map -> {
+            id.getAndIncrement();
+            JSONObject json = new JSONObject();
+            json.set("player", map.get("Player"));
+            json.set("reason", map.get("Reason"));
+            try {
+                json.set("banTime", format.parse(map.get("Date")));
+            } catch (ParseException e) {
+                Logger.info(e.getMessage());
+            }
+            json.set("releaseTime", new Date(Long.parseLong(map.get("Time"))));
+            json.set("operator", map.get("Admin"));
+            json.set("id", id.get());
+            banlist.put(json);
+        });
+    }
+
+}

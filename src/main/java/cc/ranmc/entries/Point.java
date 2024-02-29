@@ -3,8 +3,8 @@ package cc.ranmc.entries;
 import cc.ranmc.bean.RankItem;
 import cc.ranmc.constant.Prams;
 import cc.ranmc.util.DataFile;
+import cn.hutool.json.JSONObject;
 import lombok.Getter;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class Point {
      * @return 积分
      */
     public int check(long id) {
-        if (!json.has(String.valueOf(id))) return 0;
+        if (!json.containsKey(String.valueOf(id))) return 0;
         return json.getJSONObject(String.valueOf(id)).getInt("value");
     }
 
@@ -61,16 +61,16 @@ public class Point {
      */
     public void plus(long id, int value) {
         JSONObject obj;
-        if (json.has(String.valueOf(id))) {
+        if (json.containsKey(String.valueOf(id))) {
             obj = json.getJSONObject(String.valueOf(id));
         } else {
             obj = new JSONObject();
-            obj.put(Prams.VALUE, 0);
-            obj.put(Prams.DATE, "0");
+            obj.set(Prams.VALUE, 0);
+            obj.set(Prams.DATE, "0");
         }
         value += obj.getInt(Prams.VALUE);
-        obj.put(Prams.VALUE, value);
-        json.put(String.valueOf(id), obj);
+        obj.set(Prams.VALUE, value);
+        json.set(String.valueOf(id), obj);
         DataFile.write("point", json.toString());
         save();
     }
@@ -83,7 +83,7 @@ public class Point {
      */
     public boolean sub(long id, int value) {
         JSONObject obj;
-        if (json.has(String.valueOf(id))) {
+        if (json.containsKey(String.valueOf(id))) {
             obj = json.getJSONObject(String.valueOf(id));
         } else {
             return false;
@@ -91,8 +91,8 @@ public class Point {
         int point = obj.getInt(Prams.VALUE);
         if (value > point) return false;
         point -= value;
-        obj.put(Prams.VALUE, point);
-        json.put(String.valueOf(id), obj);
+        obj.set(Prams.VALUE, point);
+        json.set(String.valueOf(id), obj);
         DataFile.write("point", json.toString());
         save();
         return true;
@@ -113,7 +113,7 @@ public class Point {
         for (String key : json.keySet()) {
             rankList.add(new RankItem(key, ((JSONObject)json.get(key)).getInt("value")));
         }
-        if (rankList.size() >= 1) {
+        if (!rankList.isEmpty()) {
             rankList.sort((o1, o2) -> Integer.compare(o2.getValue(), o1.getValue()));
         } else {
             return rank;
