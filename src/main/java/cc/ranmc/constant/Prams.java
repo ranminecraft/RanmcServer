@@ -22,5 +22,6 @@ public class Prams {
     public static final String TOTAL = "total";
     public static final String TOTAL_NOT_FILTERED = "totalNotFiltered";
     public static final String ROWS = "rows";
+    public static final String SORT_ORDER = "sortOrder";
 
 }

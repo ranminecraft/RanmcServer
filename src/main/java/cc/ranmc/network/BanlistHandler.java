@@ -14,19 +14,21 @@ import cn.hutool.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class BanlistHandler {
 
     private final SQLite data = new SQLite(DataFile.read("sqlite"));
     private int lastUpdate = -1;
-    private JSONArray banlist;
+    private List<JSONObject> banlist;
     public void handle(HttpServerRequest req, HttpServerResponse res) {
-        res.setHeader("Access-Control-Allow-Origin", "https://www.ranmc.cc");
+        res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Methods", "GET");
         res.setHeader("Access-Control-Max-Age", "3600");
-        res.setHeader("Access-Control-Allow-Headers", "x-requested-with");
         Logger.info(req.getClientIP("X-Real-IP") + "请求封禁列表");
         JSONObject json = new JSONObject();
         if (!req.getMethod().equals("GET") || !req.getParams().containsKey(Prams.PAGE)) {
@@ -39,15 +41,21 @@ public class BanlistHandler {
             page = Integer.parseInt(req.getParams(Prams.PAGE).getFirst());
             if (page < 1) page = 1;
         } catch (NumberFormatException ignore) {}
-        json.set(Prams.CODE, Code.SUCCESS);
         updateBanlist();
-        json.set(Prams.TOTAL, banlist.size());
-        json.set(Prams.TOTAL_NOT_FILTERED, banlist.size());
+        List<JSONObject> list = new ArrayList<>(banlist);
+        if (req.getParams().containsKey(Prams.SORT_ORDER) &&
+                req.getParams(Prams.SORT_ORDER).getFirst()
+                        .equalsIgnoreCase("desc")) {
+            Collections.reverse(list);
+        }
+        json.set(Prams.CODE, Code.SUCCESS);
+        json.set(Prams.TOTAL, list.size());
+        json.set(Prams.TOTAL_NOT_FILTERED, list.size());
         JSONArray array = new JSONArray();
         page = (page - 1) * 20;
         for (int i = page; i < page + 20; i++) {
-            if (i >= banlist.size()) break;
-            array.put(banlist.get(i));
+            if (i >= list.size()) break;
+            array.put(list.get(i));
         }
         json.set(Prams.ROWS, array);
         res.write(json.toString(), ContentType.JSON.toString());
@@ -57,7 +65,7 @@ public class BanlistHandler {
         int day = LocalDateTime.now().getDayOfYear();
         if (lastUpdate == day) return;
         lastUpdate = day;
-        banlist = new JSONArray();
+        banlist = new ArrayList<>();
         AtomicInteger id = new AtomicInteger();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         data.findList("BANLIST").forEach(map -> {
@@ -73,7 +81,7 @@ public class BanlistHandler {
             json.set("releaseTime", new Date(Long.parseLong(map.get("Time"))));
             json.set("operator", map.get("Admin"));
             json.set("id", id.get());
-            banlist.put(json);
+            banlist.add(json);
         });
     }
 
