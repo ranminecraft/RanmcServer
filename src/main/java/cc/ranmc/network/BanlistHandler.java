@@ -4,14 +4,12 @@ import cc.ranmc.constant.Code;
 import cc.ranmc.constant.Prams;
 import cc.ranmc.entries.SQLite;
 import cc.ranmc.util.DataFile;
-import cc.ranmc.util.Logger;
 import cn.hutool.http.ContentType;
 import cn.hutool.http.server.HttpServerRequest;
 import cn.hutool.http.server.HttpServerResponse;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -28,13 +26,15 @@ public class BanlistHandler {
     public void handle(HttpServerRequest req, HttpServerResponse res) {
 
         // 允许跨域
-        res.addHeader("Access-Control-Allow-Origin", "https://www.ranmc.cc");
+        res.addHeader("Access-Control-Allow-Origin", "*");
         res.addHeader("Access-Control-Allow-Methods", "*");
         res.addHeader("Access-Control-Allow-Headers", "*");
         res.addHeader("Access-Control-Max-Age", "*");
         res.addHeader("Access-Control-Allow-Credentials", "true");
-
-        Logger.info(req.getClientIP("X-Real-IP") + "请求封禁列表");
+        if ("OPTIONS".equals(req.getMethod())) {
+            res.sendOk();
+            return;
+        }
 
         JSONObject json = new JSONObject();
 
@@ -103,12 +103,8 @@ public class BanlistHandler {
             JSONObject json = new JSONObject();
             json.set("player", map.get("Player"));
             json.set("reason", map.get("Reason"));
-            try {
-                json.set("banTime", format.parse(map.get("Date")));
-            } catch (ParseException e) {
-                Logger.info(e.getMessage());
-            }
-            json.set("releaseTime", new Date(Long.parseLong(map.get("Time"))));
+            json.set("banTime", map.get("Date"));
+            json.set("releaseTime", format.format(new Date(Long.parseLong(map.get("Time")))));
             json.set("operator", map.get("Admin"));
             json.set("id", id.get());
             banlist.add(json);
