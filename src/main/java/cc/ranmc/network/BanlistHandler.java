@@ -82,7 +82,7 @@ public class BanlistHandler {
                 limit = Integer.parseInt(req.getParams(Prams.LIMIT).getFirst());
             } catch (NumberFormatException ignore) {}
         }
-        if (limit > 30) limit = 30;
+        if (limit > 50) limit = 50;
         // 返回结果
         res.sendOk();
         json.set(Prams.CODE, Code.SUCCESS);
