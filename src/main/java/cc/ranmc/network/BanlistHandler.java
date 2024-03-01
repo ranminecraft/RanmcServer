@@ -4,6 +4,7 @@ import cc.ranmc.constant.Code;
 import cc.ranmc.constant.Prams;
 import cc.ranmc.entries.SQLite;
 import cc.ranmc.util.DataFile;
+import cc.ranmc.util.Logger;
 import cn.hutool.http.ContentType;
 import cn.hutool.http.server.HttpServerRequest;
 import cn.hutool.http.server.HttpServerResponse;
@@ -35,6 +36,7 @@ public class BanlistHandler {
             res.sendOk();
             return;
         }
+        Logger.info(req.getClientIP("X-Real-IP") + "请求封禁列表");
 
         JSONObject json = new JSONObject();
 
