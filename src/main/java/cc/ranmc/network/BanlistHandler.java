@@ -76,7 +76,7 @@ public class BanlistHandler {
             Collections.reverse(list);
         }
         // 获取单页显示数量
-        int limit = 20;
+        int limit = 30;
         if (req.getParams().containsKey(Prams.LIMIT)) {
             try {
                 limit = Integer.parseInt(req.getParams(Prams.LIMIT).getFirst());
