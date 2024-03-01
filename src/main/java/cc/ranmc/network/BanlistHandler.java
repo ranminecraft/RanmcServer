@@ -26,31 +26,58 @@ public class BanlistHandler {
     private int lastUpdate = -1;
     private List<JSONObject> banlist;
     public void handle(HttpServerRequest req, HttpServerResponse res) {
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.setHeader("Access-Control-Allow-Methods", "GET");
-        res.setHeader("Access-Control-Max-Age", "3600");
+
+        // 允许跨域
+        res.addHeader("Access-Control-Allow-Origin", "https://www.ranmc.cc");
+        res.addHeader("Access-Control-Allow-Methods", "*");
+        res.addHeader("Access-Control-Allow-Headers", "*");
+        res.addHeader("Access-Control-Max-Age", "*");
+        res.addHeader("Access-Control-Allow-Credentials", "true");
+
         Logger.info(req.getClientIP("X-Real-IP") + "请求封禁列表");
+
         JSONObject json = new JSONObject();
+
+        // 检查请求
         if (!req.getMethod().equals("GET") || !req.getParams().containsKey(Prams.PAGE)) {
             json.set(Prams.CODE, Code.UNKOWN_REQUEST);
+            res.send(Code.UNKOWN_REQUEST);
             res.write(json.toString(), ContentType.JSON.toString());
             return;
         }
+        // 获取页数
         int page = 1;
         try {
             page = Integer.parseInt(req.getParams(Prams.PAGE).getFirst());
             if (page < 1) page = 1;
         } catch (NumberFormatException ignore) {}
         updateBanlist();
-        List<JSONObject> list = new ArrayList<>(banlist);
+        List<JSONObject> list = new ArrayList<>();
+        // 过滤玩家名字
+        if (req.getParams().containsKey(Prams.PLAYER)) {
+            banlist.forEach(obj -> {
+                String searchName = req.getParams(Prams.PLAYER).getFirst();
+                if (searchName != null &&
+                        !searchName.isEmpty() &&
+                        obj.getStr("player").toLowerCase().
+                                contains(searchName.toLowerCase())) {
+                    list.add(obj);
+                }
+            });
+        } else {
+            list.addAll(banlist);
+        }
+        // 是否倒叙
         if (req.getParams().containsKey(Prams.SORT_ORDER) &&
                 req.getParams(Prams.SORT_ORDER).getFirst()
                         .equalsIgnoreCase("desc")) {
             Collections.reverse(list);
         }
+        // 返回结果
+        res.sendOk();
         json.set(Prams.CODE, Code.SUCCESS);
         json.set(Prams.TOTAL, list.size());
-        json.set(Prams.TOTAL_NOT_FILTERED, list.size());
+        json.set(Prams.TOTAL_NOT_FILTERED, banlist.size());
         JSONArray array = new JSONArray();
         page = (page - 1) * 20;
         for (int i = page; i < page + 20; i++) {
@@ -61,6 +88,9 @@ public class BanlistHandler {
         res.write(json.toString(), ContentType.JSON.toString());
     }
 
+    /**
+     * 更新列表
+     */
     private void updateBanlist() {
         int day = LocalDateTime.now().getDayOfYear();
         if (lastUpdate == day) return;
