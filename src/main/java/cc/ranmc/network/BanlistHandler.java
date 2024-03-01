@@ -75,14 +75,22 @@ public class BanlistHandler {
                         .equalsIgnoreCase("desc")) {
             Collections.reverse(list);
         }
+        // 获取单页显示数量
+        int limit = 20;
+        if (req.getParams().containsKey(Prams.LIMIT)) {
+            try {
+                limit = Integer.parseInt(req.getParams(Prams.LIMIT).getFirst());
+            } catch (NumberFormatException ignore) {}
+        }
+        if (limit > 30) limit = 30;
         // 返回结果
         res.sendOk();
         json.set(Prams.CODE, Code.SUCCESS);
         json.set(Prams.TOTAL, list.size());
         json.set(Prams.TOTAL_NOT_FILTERED, banlist.size());
         JSONArray array = new JSONArray();
-        page = (page - 1) * 20;
-        for (int i = page; i < page + 20; i++) {
+        page = (page - 1) * limit;
+        for (int i = page; i < page + limit; i++) {
             if (i >= list.size()) break;
             array.put(list.get(i));
         }
