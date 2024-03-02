@@ -17,6 +17,5 @@ public class Email {
                 <p>服务器地址：ranmc.cc</p>
                 <p>备用地址壹：b1.ranmc.cc</p>
                 <p>备用地址贰：b2.ranmc.cc</p>
-                <p>基岩版：pe.ranmc.cc 端口:36672</p>
             </div>""";
 }
