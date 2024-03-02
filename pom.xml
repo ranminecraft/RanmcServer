@@ -18,14 +18,14 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-http</artifactId>
-            <version>5.8.25</version>
+            <version>5.8.26</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-json</artifactId>
-            <version>5.8.25</version>
+            <version>5.8.26</version>
             <scope>compile</scope>
         </dependency>
 
@@ -52,6 +52,13 @@
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.45.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
         </dependency>
 
     </dependencies>
