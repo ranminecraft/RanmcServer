@@ -2,6 +2,7 @@ package cc.ranmc;
 
 import cc.ranmc.network.BanlistHandler;
 import cc.ranmc.network.PointHandler;
+import cc.ranmc.network.VerifyHandler;
 import cc.ranmc.util.Logger;
 import cn.hutool.http.HttpUtil;
 import io.github.biezhi.ome.OhMyEmail;
@@ -12,6 +13,7 @@ import static cc.ranmc.constant.Data.BANLIST_PATH;
 import static cc.ranmc.constant.Data.EMAIL;
 import static cc.ranmc.constant.Data.POINT_PATH;
 import static cc.ranmc.constant.Data.PORT;
+import static cc.ranmc.constant.Data.VERIFY_PATH;
 import static cc.ranmc.constant.Data.VERSION;
 import static cc.ranmc.constant.Data.WEB_SITE;
 
@@ -29,11 +31,10 @@ public final class Main {
         // 初始化邮件
         OhMyEmail.config(OhMyEmail.SMTP_QQ(false), "ranica@qq.com", EMAIL);
 
-        BanlistHandler banlistHandler = new BanlistHandler();
-        PointHandler pointHandler = new PointHandler();
         HttpUtil.createServer(PORT)
-                .addAction(BANLIST_PATH, banlistHandler::handle)
-                .addAction(POINT_PATH, pointHandler::handle)
+                .addAction(BANLIST_PATH, new BanlistHandler()::handle)
+                .addAction(POINT_PATH, new PointHandler()::handle)
+                .addAction(VERIFY_PATH, new VerifyHandler()::handle)
                 .start();
 
         Logger.info("已成功运行在端口" + PORT);

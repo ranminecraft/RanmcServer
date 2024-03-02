@@ -1,6 +1,5 @@
 package cc.ranmc.network;
 
-import cc.ranmc.bean.Confirm;
 import cc.ranmc.constant.Code;
 import cc.ranmc.constant.Data;
 import cc.ranmc.constant.Prams;
@@ -14,36 +13,16 @@ import cn.hutool.json.JSONObject;
 import io.github.biezhi.ome.OhMyEmail;
 import io.github.biezhi.ome.SendMailException;
 
-import java.io.UnsupportedEncodingException;
-
 public class PointHandler {
 
     private final Point point = new Point();
 
-    public void handle(HttpServerRequest req, HttpServerResponse res) throws UnsupportedEncodingException {
+    public void handle(HttpServerRequest req, HttpServerResponse res) {
+
         JSONObject json = new JSONObject();
         if (!req.getParams().containsKey(Prams.MODE)) {
             json.set(Prams.CODE, Code.UNKOWN_REQUEST);
             res.write(json.toString(), ContentType.JSON.toString());
-            return;
-        }
-        String mode = req.getParams(Prams.MODE).getFirst();
-        if (mode.equals(Prams.VERIFY)) {
-            String result = "超时或不存在，请重新验证。";
-            for (String qq : ConfirmUtil.getConfirmMap().keySet()) {
-                Confirm confirm = ConfirmUtil.getConfirmMap().get(qq);
-                String key = confirm.getKey();
-                if (!key.isEmpty() && req.getParams(Prams.KEY).getFirst().equals(key)) {
-                    if (confirm.isPass()) {
-                        result = "已确认，请勿重复操作。";
-                    } else {
-                        confirm.setPass(true);
-                        result = "成功，请在游戏内查看结果。";
-                    }
-                    break;
-                }
-            }
-            res.write(result.getBytes("GBK"), ContentType.TEXT_PLAIN.toString());
             return;
         }
         if (!req.getParams().containsKey(Prams.TOKEN) ||
@@ -52,7 +31,7 @@ public class PointHandler {
             res.write(json.toString(), ContentType.JSON.toString());
             return;
         }
-        switch (mode) {
+        switch (req.getParams(Prams.MODE).getFirst()) {
             case Prams.POINT -> {
                 json.set(Prams.CODE, Code.SUCCESS);
                 json.set(Prams.POINT, point.check(req.getParams(Prams.QQ).getFirst()));

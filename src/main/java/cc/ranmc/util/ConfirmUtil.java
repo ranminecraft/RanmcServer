@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static cc.ranmc.constant.Data.VERIFY_WEB_SITE;
+
 public class ConfirmUtil {
 
     @Getter
@@ -36,7 +38,7 @@ public class ConfirmUtil {
             confirm.setPlayer(player);
             confirm.setKey(key);
             confirmMap.put(qq, confirm);
-            String url = "http://43.248.185.80:2263/point?mode=verify&key=" + key;
+            String url = VERIFY_WEB_SITE + key;
             try {
                 OhMyEmail.subject("【桃花源】" + action + "确认")
                         .from("ranica@qq.com")
