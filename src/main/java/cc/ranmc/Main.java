@@ -13,7 +13,6 @@ import java.util.Properties;
 import static cc.ranmc.constant.Data.AUTHOR;
 import static cc.ranmc.constant.Data.BANLIST_PATH;
 import static cc.ranmc.constant.Data.EMAIL_PWD;
-import static cc.ranmc.constant.Data.FROM_EMAIL;
 import static cc.ranmc.constant.Data.POINT_PATH;
 import static cc.ranmc.constant.Data.PORT;
 import static cc.ranmc.constant.Data.VERIFY_PATH;
@@ -38,7 +37,7 @@ public final class Main {
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp-mail.outlook.com");
         props.put("mail.smtp.port", "587");
-        OhMyEmail.config(props, FROM_EMAIL, EMAIL_PWD);
+        OhMyEmail.config(props, "thyranmc@outlook.com", EMAIL_PWD);
 
         HttpUtil.createServer(PORT)
                 .addAction(BANLIST_PATH, new BanlistHandler()::handle)

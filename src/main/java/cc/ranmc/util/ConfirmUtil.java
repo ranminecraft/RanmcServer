@@ -40,8 +40,8 @@ public class ConfirmUtil {
             confirmMap.put(qq, confirm);
             String url = VERIFY_WEB_SITE + key;
             try {
-                OhMyEmail.subject("【桃花源】" + action + "确认")
-                        .from("ranica@qq.com")
+                OhMyEmail.subject(action + "确认")
+                        .from("桃花源")
                         .to(qq + "@qq.com")
                         .html(Email.text
                                 .replace("%player%", player)
