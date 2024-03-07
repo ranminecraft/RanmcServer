@@ -13,6 +13,8 @@ import cn.hutool.json.JSONObject;
 import io.github.biezhi.ome.OhMyEmail;
 import io.github.biezhi.ome.SendMailException;
 
+import static cc.ranmc.constant.Data.FROM_EMAIL;
+
 public class PointHandler {
 
     private final Point point = new Point();
@@ -74,7 +76,7 @@ public class PointHandler {
                     String msg = req.getParams(Prams.MSG).getFirst();
                     try {
                         OhMyEmail.subject("【桃花源】服务器消息")
-                                .from("ranica@qq.com")
+                                .from(FROM_EMAIL)
                                 .to(req.getParams(Prams.QQ).getFirst() + "@qq.com")
                                 .html(msg)
                                 .send();

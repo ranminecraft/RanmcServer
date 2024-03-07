@@ -12,5 +12,6 @@ public class Data {
     public static final String POINT_PATH = "/point";
     public static final String BANLIST_PATH = "/banlist";
     public static final String TOKEN = DataFile.read("token");
-    public static final String EMAIL = DataFile.read("email");
+    public static final String EMAIL_PWD = DataFile.read("email");
+    public static final String FROM_EMAIL = "thyranmc@outlook.com";
 }
