@@ -32,7 +32,7 @@ public final class Main {
         System.out.println("-----------------------");
 
         // 初始化邮件
-        Properties props = defaultConfig(true);
+        Properties props = defaultConfig(false);
         props.put("mail.smtp.ssl.enable", "false");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp-mail.outlook.com");
