@@ -41,7 +41,7 @@ public class ConfirmUtil {
             String url = VERIFY_WEB_SITE + key;
             try {
                 OhMyEmail.subject(action + "确认")
-                        .from("桃花源")
+                        .from("【桃花源】")
                         .to(qq + "@qq.com")
                         .html(Email.text
                                 .replace("%player%", player)

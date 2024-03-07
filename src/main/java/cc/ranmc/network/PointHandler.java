@@ -74,7 +74,7 @@ public class PointHandler {
                     String msg = req.getParams(Prams.MSG).getFirst();
                     try {
                         OhMyEmail.subject("服务器消息")
-                                .from("桃花源")
+                                .from("【桃花源】")
                                 .to(req.getParams(Prams.QQ).getFirst() + "@qq.com")
                                 .html(msg)
                                 .send();
