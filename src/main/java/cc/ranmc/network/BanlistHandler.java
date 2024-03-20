@@ -2,7 +2,7 @@ package cc.ranmc.network;
 
 import cc.ranmc.constant.Code;
 import cc.ranmc.constant.Prams;
-import cc.ranmc.entries.SQLite;
+import cc.ranmc.sql.SQLite;
 import cc.ranmc.util.DataFile;
 import cc.ranmc.util.Logger;
 import cn.hutool.http.ContentType;
