@@ -136,12 +136,12 @@ public class Point {
             return "null";
         }
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 8; i++) {
             if ((i + 1) > rankList.size()) {
                 break;
             }
             RankItem item = rankList.get(i);
-            builder.append("(").append(i + 1).append(") ").append(item.getName()).append(" -> ").append(item.getValue()).append("\n");
+            builder.append("(").append(i + 1).append(") QQ").append(item.getName()).append(" -> ").append(item.getValue()).append("积分\n");
         }
         return builder.toString();
     }
