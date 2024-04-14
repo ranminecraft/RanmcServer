@@ -2,7 +2,7 @@ package cc.ranmc.network;
 
 import cc.ranmc.constant.Code;
 import cc.ranmc.constant.Prams;
-import cc.ranmc.sql.SQLite;
+import cc.ranmc.sqlite.SQLite;
 import cc.ranmc.util.DataFile;
 import cc.ranmc.util.Logger;
 import cn.hutool.http.ContentType;
@@ -108,7 +108,7 @@ public class BanlistHandler {
         banlist = new ArrayList<>();
         AtomicInteger id = new AtomicInteger();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        data.findList("BANLIST").forEach(map -> {
+        data.selectList("BANLIST").forEach(map -> {
             id.getAndIncrement();
             JSONObject json = new JSONObject();
             json.set("player", map.get("Player"));
