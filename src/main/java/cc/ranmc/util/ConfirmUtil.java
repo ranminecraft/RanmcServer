@@ -1,5 +1,6 @@
 package cc.ranmc.util;
 
+import cc.ranmc.Main;
 import cc.ranmc.bean.Confirm;
 import cc.ranmc.constant.Code;
 import cc.ranmc.constant.Email;
@@ -24,11 +25,11 @@ public class ConfirmUtil {
             Confirm confirm = confirmMap.get(qq);
             if (confirm.isPass()) {
                 confirmMap.remove(qq);
-                Logger.info("成功" + action + "：" + player + "(" + qq + ")");
+                Main.getLogger().info("成功{}：{}({})", action, player, qq);
                 return Code.SUCCESS;
             } else if (confirm.getTime() < new Date().getTime()) {
                 confirmMap.remove(qq);
-                Logger.info("等待确认超时：" + qq);
+                Main.getLogger().info("等待确认超时：{}", qq);
                 return Code.TIME_OUT;
             }
         } else {
@@ -49,8 +50,8 @@ public class ConfirmUtil {
                                 .replace("%action%", action))
                         .send();
             } catch (SendMailException e) {
-                Logger.info(e.getMessage());
-                Logger.info("发送邮件失败");
+                Main.getLogger().info(e.getMessage());
+                Main.getLogger().info("发送邮件失败");
                 return Code.ERROR;
             }
         }

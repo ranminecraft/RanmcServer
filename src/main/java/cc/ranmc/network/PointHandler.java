@@ -1,11 +1,11 @@
 package cc.ranmc.network;
 
+import cc.ranmc.Main;
 import cc.ranmc.constant.Code;
 import cc.ranmc.constant.Data;
 import cc.ranmc.constant.Prams;
 import cc.ranmc.entries.Point;
 import cc.ranmc.util.ConfirmUtil;
-import cc.ranmc.util.Logger;
 import cn.hutool.http.ContentType;
 import cn.hutool.http.server.HttpServerRequest;
 import cn.hutool.http.server.HttpServerResponse;
@@ -36,12 +36,12 @@ public class PointHandler {
                 json.set(Prams.CODE, Code.SUCCESS);
                 json.set(Prams.POINT, point.check(req.getParams(Prams.QQ).getFirst()));
                 json.set(Prams.RANK, point.getRank(req.getParams(Prams.QQ).getFirst()));
-                Logger.info("查询积分" + req.getParams(Prams.QQ).getFirst() + "：" + json.get(Prams.POINT));
+                Main.getLogger().info("查询积分{}：{}", req.getParams(Prams.QQ).getFirst(), json.get(Prams.POINT));
             }
             case Prams.TOP -> {
                 json.set(Prams.CODE, Code.SUCCESS);
                 json.set(Prams.MSG, point.getRankList());
-                Logger.info("获取排行榜");
+                Main.getLogger().info("获取排行榜");
             }
             case Prams.SUB -> {
                 if (point.sub(Long.parseLong(req.getParams(Prams.QQ).getFirst()),
@@ -50,13 +50,13 @@ public class PointHandler {
                 } else {
                     json.set(Prams.CODE, Code.UNCHANGED);
                 }
-                Logger.info("消耗积分" + req.getParams(Prams.QQ).getFirst() + ":" + req.getParams(Prams.POINT));
+                Main.getLogger().info("消耗积分{}:{}", req.getParams(Prams.QQ).getFirst(), req.getParams(Prams.POINT));
             }
             case Prams.PLUS -> {
                 point.plus(Long.parseLong(req.getParams(Prams.QQ).getFirst()),
                         Integer.parseInt(req.getParams(Prams.POINT).getFirst()));
                 json.set(Prams.CODE, Code.SUCCESS);
-                Logger.info("获得积分" + req.getParams(Prams.QQ).getFirst() + ":" + req.getParams(Prams.POINT));
+                Main.getLogger().info("获得积分{}:{}", req.getParams(Prams.QQ).getFirst(), req.getParams(Prams.POINT));
             }
             case Prams.CONFIRM -> {
                 if (req.getParams().containsKey(Prams.CODE) && req.getParams().containsKey(Prams.PLAYER)) {
@@ -79,10 +79,10 @@ public class PointHandler {
                                 .html(msg)
                                 .send();
                     } catch (SendMailException e) {
-                        Logger.info("发送邮件失败：" + e.getMessage());
+                        Main.getLogger().info("发送邮件失败：{}", e.getMessage());
                     }
                     json.set(Prams.CODE, Code.SUCCESS);
-                    Logger.info("发出广播" + req.getParams(Prams.QQ).getFirst() + ":" + msg);
+                    Main.getLogger().info("发出广播{}:{}", req.getParams(Prams.QQ).getFirst(), msg);
                 } else {
                     json.set(Prams.CODE, Code.UNKOWN_REQUEST);
                 }

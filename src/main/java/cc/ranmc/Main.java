@@ -3,10 +3,11 @@ package cc.ranmc;
 import cc.ranmc.network.BanlistHandler;
 import cc.ranmc.network.PointHandler;
 import cc.ranmc.network.VerifyHandler;
-import cc.ranmc.util.Logger;
 import cn.hutool.http.HttpUtil;
 import io.github.biezhi.ome.OhMyEmail;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
@@ -22,6 +23,9 @@ import static io.github.biezhi.ome.OhMyEmail.defaultConfig;
 
 @Getter
 public final class Main {
+
+    @Getter
+    public static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
 
@@ -45,7 +49,7 @@ public final class Main {
                 .addAction(VERIFY_PATH, new VerifyHandler()::handle)
                 .start();
 
-        Logger.info("已成功运行在端口" + PORT);
+        getLogger().info("已成功运行在端口" + PORT);
     }
 
 
