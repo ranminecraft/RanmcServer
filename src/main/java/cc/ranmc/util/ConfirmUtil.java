@@ -50,8 +50,8 @@ public class ConfirmUtil {
                                 .replace("%action%", action))
                         .send();
             } catch (SendMailException e) {
-                Main.getLogger().info(e.getMessage());
-                Main.getLogger().info("发送邮件失败");
+                Main.getLogger().error(e.getMessage());
+                Main.getLogger().error("发送邮件失败");
                 return Code.ERROR;
             }
         }
