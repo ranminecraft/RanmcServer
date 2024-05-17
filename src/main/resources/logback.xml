@@ -6,18 +6,20 @@
         </encoder>
     </appender>
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>log/latest.log</file>
+        <file>logs/latest.log</file>
         <encoder>
             <pattern>[%d{HH:mm:ss}] %msg%n</pattern>
             <charset>UTF-8</charset>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>log/%d{yyyy-MM-dd}.log</FileNamePattern>
+            <FileNamePattern>logs/%d{yyyy-MM-dd}.log</FileNamePattern>
             <maxHistory>32</maxHistory>
         </rollingPolicy>
     </appender>
-    <root level="all">
+    <root level="OFF">
+    </root>
+    <logger name="cc.ranmc.Main" level="ALL" additivity="false">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
-    </root>
+    </logger>
 </configuration>
