@@ -13,10 +13,11 @@ import cn.hutool.json.JSONObject;
 import io.github.biezhi.ome.OhMyEmail;
 import io.github.biezhi.ome.SendMailException;
 
-public class PointHandler {
+public class PointHandler extends BaseHandler {
 
     private final Point point = new Point();
 
+    @Override
     public void handle(HttpServerRequest req, HttpServerResponse res) {
 
         JSONObject json = new JSONObject();

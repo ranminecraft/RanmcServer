@@ -53,7 +53,7 @@
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
-            <version>3.45.3.0</version>
+            <version>3.46.0.0</version>
             <scope>compile</scope>
         </dependency>
 
@@ -68,7 +68,7 @@
             <groupId>cc.ranmc</groupId>
             <artifactId>Ranmc</artifactId>
             <version>RELEASE</version>
-            <systemPath>/home/ranica/project/Ranmc.jar</systemPath>
+            <systemPath>D:/Project/Ranmc.jar</systemPath>
             <scope>system</scope>
         </dependency>
 

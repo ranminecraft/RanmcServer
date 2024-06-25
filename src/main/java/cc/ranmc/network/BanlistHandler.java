@@ -19,11 +19,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class BanlistHandler {
+public class BanlistHandler extends BaseHandler {
 
     private final SQLite data = new SQLite(DataFile.read("sqlite"));
     private int lastUpdate = -1;
     private List<JSONObject> banlist;
+
+    @Override
     public void handle(HttpServerRequest req, HttpServerResponse res) {
 
         // 允许跨域

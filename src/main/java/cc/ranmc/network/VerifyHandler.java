@@ -7,8 +7,9 @@ import cn.hutool.http.ContentType;
 import cn.hutool.http.server.HttpServerRequest;
 import cn.hutool.http.server.HttpServerResponse;
 
-public class VerifyHandler {
+public class VerifyHandler extends BaseHandler {
 
+    @Override
     public void handle(HttpServerRequest req, HttpServerResponse res) {
 
         // 允许跨域
