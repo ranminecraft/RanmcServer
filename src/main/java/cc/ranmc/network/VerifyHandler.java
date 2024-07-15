@@ -1,11 +1,15 @@
 package cc.ranmc.network;
 
 import cc.ranmc.bean.Confirm;
+import cc.ranmc.constant.Data;
 import cc.ranmc.constant.Prams;
 import cc.ranmc.util.ConfirmUtil;
 import cn.hutool.http.ContentType;
 import cn.hutool.http.server.HttpServerRequest;
 import cn.hutool.http.server.HttpServerResponse;
+import cn.hutool.json.JSONObject;
+
+import static cc.ranmc.constant.Code.BAD_REQUEST;
 
 public class VerifyHandler extends BaseHandler {
 
@@ -23,6 +27,23 @@ public class VerifyHandler extends BaseHandler {
             return;
         }
 
+        if (req.getParams().containsKey(Prams.TOKEN) &&
+                req.getParams(Prams.TOKEN).getFirst().equals(Data.TOKEN)) {
+            JSONObject json = new JSONObject();
+            if (req.getParams().containsKey(Prams.EMAIL) &&
+                    req.getParams().containsKey(Prams.MODE) &&
+                    req.getParams().containsKey(Prams.PLAYER)) {
+                json.set(Prams.CODE, ConfirmUtil.check(
+                        req.getParams(Prams.PLAYER).getFirst(),
+                        req.getParams(Prams.EMAIL).getFirst(),
+                        req.getParams(Prams.MODE).getFirst()));
+            } else {
+                json.set(Prams.CODE, BAD_REQUEST);
+            }
+            res.write(json.toString(), ContentType.JSON.toString());
+            return;
+        }
+
         String result = "超时或不存在，请重新验证。";
         for (String qq : ConfirmUtil.getConfirmMap().keySet()) {
             Confirm confirm = ConfirmUtil.getConfirmMap().get(qq);
@@ -37,6 +58,7 @@ public class VerifyHandler extends BaseHandler {
                 break;
             }
         }
+
         res.write(result, ContentType.TEXT_PLAIN.toString());
     }
 }

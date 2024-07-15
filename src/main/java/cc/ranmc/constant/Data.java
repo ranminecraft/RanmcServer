@@ -10,7 +10,7 @@ public class Data {
     public static final int PORT = 2263;
     public static final String BASE_PATH = "/";
     public static final String VERIFY_PATH = "/verify";
-    public static final String POINT_PATH = "/point";
+    public static final String BROADCAST_PATH = "/broadcast";
     public static final String BANLIST_PATH = "/banlist";
     public static final String TOKEN = DataFile.read("token");
     public static final String EMAIL_PWD = DataFile.read("email");
