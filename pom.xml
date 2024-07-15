@@ -18,14 +18,14 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-http</artifactId>
-            <version>5.8.27</version>
+            <version>5.8.28</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-json</artifactId>
-            <version>5.8.27</version>
+            <version>5.8.28</version>
             <scope>compile</scope>
         </dependency>
 
