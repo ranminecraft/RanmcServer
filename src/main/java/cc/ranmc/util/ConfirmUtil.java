@@ -20,7 +20,13 @@ public class ConfirmUtil {
     private static final Map<String, Confirm> confirmMap = new HashMap<>();
     
     public static int check(String player, String email, String mode) {
-        String action = "0".equals(mode) ? "绑定游戏账号" : "重置游戏密码";
+        String action = switch (mode) {
+            case "0" -> "绑定游戏账号";
+            case "1" -> "重置游戏密码";
+            case "2" -> "迁移账号数据";
+            default -> "错误操作";
+        };
+
         if (confirmMap.containsKey(email)) {
             Confirm confirm = confirmMap.get(email);
             if (confirm.isPass()) {
