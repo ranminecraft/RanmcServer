@@ -39,11 +39,12 @@ public final class Main {
 
         // 初始化邮件
         Properties props = defaultConfig(false);
-        props.put("mail.smtp.ssl.enable", "false");
+        props.put("mail.smtp.ssl.enable", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp-mail.outlook.com");
-        props.put("mail.smtp.port", "587");
-        OhMyEmail.config(props, "thyranmc@outlook.com", EMAIL_PWD);
+        props.put("mail.smtp.host", "smtp.sohu.com");
+        props.put("mail.smtp.port", "465");
+        OhMyEmail.config(props, "minelive@sohu.com", EMAIL_PWD);
+
         HttpUtil.createServer(PORT)
                 .addAction(BASE_PATH, new BaseHandler()::handle)
                 .addAction(BANLIST_PATH, new BanlistHandler()::handle)
