@@ -39,7 +39,7 @@ public class BanlistHandler extends BaseHandler {
             return;
         }
         Main.getLogger().info("{}({})请求封禁列表",
-                req.getHeader("user-agent"),
+                req.getUserAgentStr(),
                 req.getClientIP("X-Real-IP"));
 
         JSONObject json = new JSONObject();

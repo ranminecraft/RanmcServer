@@ -43,13 +43,14 @@ public class CheckHandler extends BaseHandler {
             BotCheckBean botCheckBean = BotCheckUtil.getBotCheckMap().get(player);
             String key = botCheckBean.getKey();
             if (!key.isEmpty() &&
+                    req.getHeader("Host").equals("ranmc.minelive.top") &&
                     req.getParams().containsKey(Prams.KEY) &&
                     req.getParams(Prams.KEY).getFirst().equals(key)) {
                 if (botCheckBean.isPass()) {
                     code = 2;
                 } else {
                     botCheckBean.setAddress(req.getClientIP("X-Real-IP"));
-                    botCheckBean.setAgent(req.getHeader("user-agent"));
+                    botCheckBean.setAgent(req.getUserAgentStr());
                     botCheckBean.setPass(true);
                     code = 1;
                 }
