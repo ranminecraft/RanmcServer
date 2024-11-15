@@ -1,7 +1,7 @@
 package cc.ranmc.util;
 
 import cc.ranmc.Main;
-import cc.ranmc.bean.Confirm;
+import cc.ranmc.bean.VerifyBean;
 import cc.ranmc.constant.Code;
 import cc.ranmc.constant.Email;
 import io.github.biezhi.ome.OhMyEmail;
@@ -14,10 +14,10 @@ import java.util.Map;
 
 import static cc.ranmc.constant.Data.VERIFY_WEB_SITE;
 
-public class ConfirmUtil {
+public class VerifyUtil {
 
     @Getter
-    private static final Map<String, Confirm> confirmMap = new HashMap<>();
+    private static final Map<String, VerifyBean> verifyMap = new HashMap<>();
     
     public static int check(String player, String email, String mode) {
         String action = switch (mode) {
@@ -27,24 +27,24 @@ public class ConfirmUtil {
             default -> "错误操作";
         };
 
-        if (confirmMap.containsKey(email)) {
-            Confirm confirm = confirmMap.get(email);
-            if (confirm.isPass()) {
-                confirmMap.remove(email);
+        if (verifyMap.containsKey(email)) {
+            VerifyBean verifyBean = verifyMap.get(email);
+            if (verifyBean.isPass()) {
+                verifyMap.remove(email);
                 Main.getLogger().info("成功{}：{}({})", action, player, email);
                 return Code.SUCCESS;
-            } else if (confirm.getTime() < new Date().getTime()) {
-                confirmMap.remove(email);
+            } else if (verifyBean.getTime() < new Date().getTime()) {
+                verifyMap.remove(email);
                 Main.getLogger().info("等待确认超时：{}", email);
                 return Code.TIME_OUT;
             }
         } else {
             String key = KeyGenerator.get();
-            Confirm confirm = new Confirm();
-            confirm.setMode(mode);
-            confirm.setPlayer(player);
-            confirm.setKey(key);
-            confirmMap.put(email, confirm);
+            VerifyBean verifyBean = new VerifyBean();
+            verifyBean.setMode(mode);
+            verifyBean.setPlayer(player);
+            verifyBean.setKey(key);
+            verifyMap.put(email, verifyBean);
             String url = VERIFY_WEB_SITE + key;
             try {
                 OhMyEmail.subject(action + "确认")

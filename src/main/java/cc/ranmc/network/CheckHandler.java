@@ -1,9 +1,9 @@
 package cc.ranmc.network;
 
-import cc.ranmc.bean.VerifyBean;
+import cc.ranmc.bean.BotCheckBean;
 import cc.ranmc.constant.Data;
 import cc.ranmc.constant.Prams;
-import cc.ranmc.util.VerifyUtil;
+import cc.ranmc.util.BotCheckUtil;
 import cn.hutool.http.ContentType;
 import cn.hutool.http.server.HttpServerRequest;
 import cn.hutool.http.server.HttpServerResponse;
@@ -11,7 +11,7 @@ import cn.hutool.json.JSONObject;
 
 import static cc.ranmc.constant.Code.BAD_REQUEST;
 
-public class VerifyHandler extends BaseHandler {
+public class CheckHandler extends BaseHandler {
 
     @Override
     public void handle(HttpServerRequest req, HttpServerResponse res) {
@@ -30,13 +30,8 @@ public class VerifyHandler extends BaseHandler {
         if (req.getParams().containsKey(Prams.TOKEN) &&
                 req.getParams(Prams.TOKEN).getFirst().equals(Data.TOKEN)) {
             JSONObject json = new JSONObject();
-            if (req.getParams().containsKey(Prams.EMAIL) &&
-                    req.getParams().containsKey(Prams.MODE) &&
-                    req.getParams().containsKey(Prams.PLAYER)) {
-                json.set(Prams.CODE, VerifyUtil.check(
-                        req.getParams(Prams.PLAYER).getFirst(),
-                        req.getParams(Prams.EMAIL).getFirst(),
-                        req.getParams(Prams.MODE).getFirst()));
+            if (req.getParams().containsKey(Prams.PLAYER)) {
+                json = BotCheckUtil.check(req.getParams(Prams.PLAYER).getFirst());
             } else {
                 json.set(Prams.CODE, BAD_REQUEST);
             }
@@ -45,14 +40,16 @@ public class VerifyHandler extends BaseHandler {
         }
 
         String result = "超时或不存在，请重新验证。";
-        for (String qq : VerifyUtil.getVerifyMap().keySet()) {
-            VerifyBean verifyBean = VerifyUtil.getVerifyMap().get(qq);
-            String key = verifyBean.getKey();
+        for (String player : BotCheckUtil.getBotCheckMap().keySet()) {
+            BotCheckBean botCheckBean = BotCheckUtil.getBotCheckMap().get(player);
+            String key = botCheckBean.getKey();
             if (!key.isEmpty() && req.getParams(Prams.KEY).getFirst().equals(key)) {
-                if (verifyBean.isPass()) {
+                if (botCheckBean.isPass()) {
                     result = "已确认，请勿重复操作。";
                 } else {
-                    verifyBean.setPass(true);
+                    botCheckBean.setAddress(req.getClientIP("X-Real-IP"));
+                    botCheckBean.setAgent(req.getHeader("user-agent"));
+                    botCheckBean.setPass(true);
                     result = "验证成功，请在游戏内查看结果。";
                 }
                 break;

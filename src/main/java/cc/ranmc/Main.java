@@ -3,6 +3,7 @@ package cc.ranmc;
 import cc.ranmc.network.BanlistHandler;
 import cc.ranmc.network.BaseHandler;
 import cc.ranmc.network.BroadcastHandler;
+import cc.ranmc.network.CheckHandler;
 import cc.ranmc.network.VerifyHandler;
 import cn.hutool.http.HttpUtil;
 import io.github.biezhi.ome.OhMyEmail;
@@ -16,6 +17,7 @@ import static cc.ranmc.constant.Data.AUTHOR;
 import static cc.ranmc.constant.Data.BANLIST_PATH;
 import static cc.ranmc.constant.Data.BASE_PATH;
 import static cc.ranmc.constant.Data.BROADCAST_PATH;
+import static cc.ranmc.constant.Data.CHECK_PATH;
 import static cc.ranmc.constant.Data.EMAIL_PWD;
 import static cc.ranmc.constant.Data.PORT;
 import static cc.ranmc.constant.Data.VERIFY_PATH;
@@ -50,6 +52,7 @@ public final class Main {
                 .addAction(BANLIST_PATH, new BanlistHandler()::handle)
                 .addAction(BROADCAST_PATH, new BroadcastHandler()::handle)
                 .addAction(VERIFY_PATH, new VerifyHandler()::handle)
+                .addAction(CHECK_PATH, new CheckHandler()::handle)
                 .start();
 
         getLogger().info("已成功运行在端口" + PORT);

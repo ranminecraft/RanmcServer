@@ -14,4 +14,5 @@ public class Prams {
     public static final String LIMIT = "limit";
     public static final String EMAIL = "email";
     public static final String MODE = "mode";
+    public static final String URL = "url";
 }
