@@ -31,9 +31,7 @@ public class BotCheckUtil {
                 json.set(Prams.CODE, Code.SUCCESS);
             } else if (botCheckBean.getTime() < new Date().getTime()) {
                 botCheckMap.remove(player);
-                Main.getLogger().info("{}人机验证超时：{}({})",
-                        player, botCheckBean.getAddress(),
-                        botCheckBean.getAgent());
+                Main.getLogger().info("{}人机验证超时", player);
                 json.set(Prams.CODE, Code.TIME_OUT);
             } else {
                 json.set(Prams.URL, BOT_CHECK_WEB_SITE + botCheckBean.getKey());
