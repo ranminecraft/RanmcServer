@@ -38,25 +38,25 @@ public class CheckHandler extends BaseHandler {
             res.write(json.toString(), ContentType.JSON.toString());
             return;
         }
-
-        String result = "超时或不存在，请重新验证。";
+        int code = 3;
         for (String player : BotCheckUtil.getBotCheckMap().keySet()) {
             BotCheckBean botCheckBean = BotCheckUtil.getBotCheckMap().get(player);
             String key = botCheckBean.getKey();
-            if (!key.isEmpty() && req.getParams(Prams.KEY).getFirst().equals(key)) {
+            if (!key.isEmpty() &&
+                    req.getParams().containsKey(Prams.KEY) &&
+                    req.getParams(Prams.KEY).getFirst().equals(key)) {
                 if (botCheckBean.isPass()) {
-                    result = "已确认，请勿重复操作。";
+                    code = 2;
                 } else {
                     botCheckBean.setAddress(req.getClientIP("X-Real-IP"));
                     botCheckBean.setAgent(req.getHeader("user-agent"));
                     botCheckBean.setPass(true);
-                    result = "验证成功，请在游戏内查看结果。";
+                    code = 1;
                 }
                 break;
             }
         }
-
-        res.write(result, ContentType.TEXT_PLAIN.toString());
+        res.write("<html><head><meta http-equiv=\"refresh\" content=\"0;url=https://www.ranmc.cc/check.html?result=" + code + "\"></head><body></body></html>", ContentType.TEXT_HTML.toString());
     }
 }
 
