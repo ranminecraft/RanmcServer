@@ -10,6 +10,7 @@ import cn.hutool.http.server.HttpServerResponse;
 import cn.hutool.json.JSONObject;
 
 import static cc.ranmc.constant.Code.BAD_REQUEST;
+import static cc.ranmc.constant.Data.VERIFY_HOST;
 
 public class CheckHandler extends BaseHandler {
 
@@ -43,7 +44,7 @@ public class CheckHandler extends BaseHandler {
             BotCheckBean botCheckBean = BotCheckUtil.getBotCheckMap().get(player);
             String key = botCheckBean.getKey();
             if (!key.isEmpty() &&
-                    req.getHeader("Host").equals("ranmc.minelive.top") &&
+                    req.getHeader("Host").equals(VERIFY_HOST) &&
                     req.getParams().containsKey(Prams.KEY) &&
                     req.getParams(Prams.KEY).getFirst().equals(key)) {
                 if (botCheckBean.isPass()) {

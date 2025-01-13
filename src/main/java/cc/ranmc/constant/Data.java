@@ -6,7 +6,8 @@ public class Data {
     public static final String AUTHOR = "Ranica";
     public static final String VERSION = "Release 4.0";
     public static final String WEB_SITE = "https://www.ranmc.cc/";
-    public static final String BOT_CHECK_WEB_SITE = "https://ranmc.minelive.top/check?key=";
+    public static final String VERIFY_HOST = "verify.ranmc.cc";
+    public static final String BOT_CHECK_WEB_SITE = "https://" + VERIFY_HOST + "/check?key=";
     public static final String VERIFY_WEB_SITE = "https://www.ranmc.cc/verify.html?key=";
     public static final int PORT = 2263;
     public static final String BASE_PATH = "/";
