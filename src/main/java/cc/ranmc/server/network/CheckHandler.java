@@ -40,22 +40,23 @@ public class CheckHandler extends BaseHandler {
             return;
         }
         int code = 3;
-        for (String player : BotCheckUtil.getBotCheckMap().keySet()) {
-            BotCheckBean botCheckBean = BotCheckUtil.getBotCheckMap().get(player);
-            String key = botCheckBean.getKey();
-            if (!key.isEmpty() &&
-                    req.getHeader("Token").equals(TOKEN) &&
-                    req.getParams().containsKey(Prams.KEY) &&
-                    req.getParams(Prams.KEY).getFirst().equals(key)) {
-                if (botCheckBean.isPass()) {
-                    code = 2;
-                } else {
-                    botCheckBean.setAddress(req.getClientIP("X-Real-IP"));
-                    botCheckBean.setAgent(req.getUserAgentStr());
-                    botCheckBean.setPass(true);
-                    code = 1;
+        if (req.getHeaders().containsKey("RanmcToken") &&
+                req.getHeader("RanmcToken").equals(TOKEN) &&
+                req.getParams().containsKey(Prams.KEY)) {
+            for (String player : BotCheckUtil.getBotCheckMap().keySet()) {
+                BotCheckBean botCheckBean = BotCheckUtil.getBotCheckMap().get(player);
+                String key = botCheckBean.getKey();
+                if (!key.isEmpty() && req.getParams(Prams.KEY).getFirst().equals(key)) {
+                    if (botCheckBean.isPass()) {
+                        code = 2;
+                    } else {
+                        botCheckBean.setAddress(req.getClientIP("X-Real-IP"));
+                        botCheckBean.setAgent(req.getUserAgentStr());
+                        botCheckBean.setPass(true);
+                        code = 1;
+                    }
+                    break;
                 }
-                break;
             }
         }
         res.write("<html><head><meta http-equiv=\"refresh\" content=\"0;url=https://www.ranmc.cc/check.html?result=" + code + "\"></head><body></body></html>", ContentType.TEXT_HTML.toString());
