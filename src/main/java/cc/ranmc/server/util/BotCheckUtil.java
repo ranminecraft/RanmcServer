@@ -1,9 +1,9 @@
-package cc.ranmc.util;
+package cc.ranmc.server.util;
 
-import cc.ranmc.Main;
-import cc.ranmc.bean.BotCheckBean;
-import cc.ranmc.constant.Code;
-import cc.ranmc.constant.Prams;
+import cc.ranmc.server.Main;
+import cc.ranmc.server.bean.BotCheckBean;
+import cc.ranmc.server.constant.Code;
+import cc.ranmc.server.constant.Prams;
 import cn.hutool.json.JSONObject;
 import lombok.Getter;
 
@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static cc.ranmc.constant.Data.BOT_CHECK_WEB_SITE;
+import static cc.ranmc.server.constant.Data.BOT_CHECK_WEB_SITE;
 
 public class BotCheckUtil {
 
@@ -24,7 +24,7 @@ public class BotCheckUtil {
             BotCheckBean botCheckBean = botCheckMap.get(player);
             if (botCheckBean.isPass()) {
                 botCheckMap.remove(player);
-                Main.getLogger().info("{}通过人机验证({})",
+                Main.getLogger().info("{}({})通过人机验证",
                         player,
                         botCheckBean.getAddress());
                 json.set(Prams.CODE, Code.SUCCESS);

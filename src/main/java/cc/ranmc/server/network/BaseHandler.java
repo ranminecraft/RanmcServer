@@ -1,4 +1,4 @@
-package cc.ranmc.network;
+package cc.ranmc.server.network;
 
 import cn.hutool.http.ContentType;
 import cn.hutool.http.server.HttpServerRequest;

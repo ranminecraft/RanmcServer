@@ -1,4 +1,4 @@
-package cc.ranmc.constant;
+package cc.ranmc.server.constant;
 
 public class Email {
     public static String text = """

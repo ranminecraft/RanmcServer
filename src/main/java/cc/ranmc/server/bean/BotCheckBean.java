@@ -1,4 +1,4 @@
-package cc.ranmc.bean;
+package cc.ranmc.server.bean;
 
 import lombok.Data;
 

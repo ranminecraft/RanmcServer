@@ -1,4 +1,4 @@
-package cc.ranmc.constant;
+package cc.ranmc.server.constant;
 
 public class Code {
     public static final int SUCCESS = 200;

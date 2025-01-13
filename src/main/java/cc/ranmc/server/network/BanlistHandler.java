@@ -1,10 +1,10 @@
-package cc.ranmc.network;
+package cc.ranmc.server.network;
 
-import cc.ranmc.Main;
-import cc.ranmc.constant.Code;
-import cc.ranmc.constant.Prams;
+import cc.ranmc.server.Main;
+import cc.ranmc.server.constant.Code;
+import cc.ranmc.server.constant.Prams;
 import cc.ranmc.sqlite.SQLite;
-import cc.ranmc.util.DataFile;
+import cc.ranmc.server.util.DataFile;
 import cn.hutool.http.ContentType;
 import cn.hutool.http.server.HttpServerRequest;
 import cn.hutool.http.server.HttpServerResponse;
@@ -38,8 +38,7 @@ public class BanlistHandler extends BaseHandler {
             res.sendOk();
             return;
         }
-        Main.getLogger().info("{}({})请求封禁列表",
-                req.getUserAgentStr(),
+        Main.getLogger().info("{}请求封禁列表",
                 req.getClientIP("X-Real-IP"));
 
         JSONObject json = new JSONObject();

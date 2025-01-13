@@ -1,4 +1,4 @@
-package cc.ranmc.constant;
+package cc.ranmc.server.constant;
 
 public class Prams {
     public static final String PLAYER = "player";

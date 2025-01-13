@@ -1,10 +1,10 @@
-package cc.ranmc;
+package cc.ranmc.server;
 
-import cc.ranmc.network.BanlistHandler;
-import cc.ranmc.network.BaseHandler;
-import cc.ranmc.network.BroadcastHandler;
-import cc.ranmc.network.CheckHandler;
-import cc.ranmc.network.VerifyHandler;
+import cc.ranmc.server.network.BanlistHandler;
+import cc.ranmc.server.network.BaseHandler;
+import cc.ranmc.server.network.BroadcastHandler;
+import cc.ranmc.server.network.CheckHandler;
+import cc.ranmc.server.network.VerifyHandler;
 import cn.hutool.http.HttpUtil;
 import io.github.biezhi.ome.OhMyEmail;
 import lombok.Getter;
@@ -13,16 +13,16 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
-import static cc.ranmc.constant.Data.AUTHOR;
-import static cc.ranmc.constant.Data.BANLIST_PATH;
-import static cc.ranmc.constant.Data.BASE_PATH;
-import static cc.ranmc.constant.Data.BROADCAST_PATH;
-import static cc.ranmc.constant.Data.CHECK_PATH;
-import static cc.ranmc.constant.Data.EMAIL_PWD;
-import static cc.ranmc.constant.Data.PORT;
-import static cc.ranmc.constant.Data.VERIFY_PATH;
-import static cc.ranmc.constant.Data.VERSION;
-import static cc.ranmc.constant.Data.WEB_SITE;
+import static cc.ranmc.server.constant.Data.AUTHOR;
+import static cc.ranmc.server.constant.Data.BANLIST_PATH;
+import static cc.ranmc.server.constant.Data.BASE_PATH;
+import static cc.ranmc.server.constant.Data.BROADCAST_PATH;
+import static cc.ranmc.server.constant.Data.CHECK_PATH;
+import static cc.ranmc.server.constant.Data.EMAIL_PWD;
+import static cc.ranmc.server.constant.Data.PORT;
+import static cc.ranmc.server.constant.Data.VERIFY_PATH;
+import static cc.ranmc.server.constant.Data.VERSION;
+import static cc.ranmc.server.constant.Data.WEB_SITE;
 import static io.github.biezhi.ome.OhMyEmail.defaultConfig;
 
 @Getter

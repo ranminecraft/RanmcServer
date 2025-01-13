@@ -1,9 +1,9 @@
-package cc.ranmc.util;
+package cc.ranmc.server.util;
 
-import cc.ranmc.Main;
-import cc.ranmc.bean.VerifyBean;
-import cc.ranmc.constant.Code;
-import cc.ranmc.constant.Email;
+import cc.ranmc.server.Main;
+import cc.ranmc.server.bean.VerifyBean;
+import cc.ranmc.server.constant.Code;
+import cc.ranmc.server.constant.Email;
 import io.github.biezhi.ome.OhMyEmail;
 import io.github.biezhi.ome.SendMailException;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static cc.ranmc.constant.Data.VERIFY_WEB_SITE;
+import static cc.ranmc.server.constant.Data.VERIFY_WEB_SITE;
 
 public class VerifyUtil {
 

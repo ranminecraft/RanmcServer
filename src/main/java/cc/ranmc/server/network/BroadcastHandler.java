@@ -1,9 +1,9 @@
-package cc.ranmc.network;
+package cc.ranmc.server.network;
 
-import cc.ranmc.Main;
-import cc.ranmc.constant.Code;
-import cc.ranmc.constant.Data;
-import cc.ranmc.constant.Prams;
+import cc.ranmc.server.Main;
+import cc.ranmc.server.constant.Code;
+import cc.ranmc.server.constant.Data;
+import cc.ranmc.server.constant.Prams;
 import cn.hutool.http.ContentType;
 import cn.hutool.http.server.HttpServerRequest;
 import cn.hutool.http.server.HttpServerResponse;

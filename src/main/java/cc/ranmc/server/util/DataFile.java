@@ -1,6 +1,6 @@
-package cc.ranmc.util;
+package cc.ranmc.server.util;
 
-import cc.ranmc.Main;
+import cc.ranmc.server.Main;
 import org.codehaus.plexus.util.FileUtils;
 
 import java.io.File;

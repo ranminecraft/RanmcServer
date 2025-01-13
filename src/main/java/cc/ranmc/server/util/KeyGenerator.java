@@ -1,4 +1,4 @@
-package cc.ranmc.util;
+package cc.ranmc.server.util;
 
 import java.util.Random;
 

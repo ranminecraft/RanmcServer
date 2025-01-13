@@ -1,15 +1,15 @@
-package cc.ranmc.network;
+package cc.ranmc.server.network;
 
-import cc.ranmc.bean.VerifyBean;
-import cc.ranmc.constant.Data;
-import cc.ranmc.constant.Prams;
-import cc.ranmc.util.VerifyUtil;
+import cc.ranmc.server.bean.VerifyBean;
+import cc.ranmc.server.constant.Data;
+import cc.ranmc.server.constant.Prams;
+import cc.ranmc.server.util.VerifyUtil;
 import cn.hutool.http.ContentType;
 import cn.hutool.http.server.HttpServerRequest;
 import cn.hutool.http.server.HttpServerResponse;
 import cn.hutool.json.JSONObject;
 
-import static cc.ranmc.constant.Code.BAD_REQUEST;
+import static cc.ranmc.server.constant.Code.BAD_REQUEST;
 
 public class VerifyHandler extends BaseHandler {
 

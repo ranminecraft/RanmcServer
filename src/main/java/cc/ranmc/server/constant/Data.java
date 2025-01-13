@@ -1,6 +1,6 @@
-package cc.ranmc.constant;
+package cc.ranmc.server.constant;
 
-import cc.ranmc.util.DataFile;
+import cc.ranmc.server.util.DataFile;
 
 public class Data {
     public static final String AUTHOR = "Ranica";
