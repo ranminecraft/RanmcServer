@@ -24,10 +24,9 @@ public class BotCheckUtil {
             BotCheckBean botCheckBean = botCheckMap.get(player);
             if (botCheckBean.isPass()) {
                 botCheckMap.remove(player);
-                Main.getLogger().info("{}通过人机验证：{}({})",
+                Main.getLogger().info("{}通过人机验证({})",
                         player,
-                        botCheckBean.getAddress(),
-                        botCheckBean.getAgent());
+                        botCheckBean.getAddress());
                 json.set(Prams.CODE, Code.SUCCESS);
             } else if (botCheckBean.getTime() < new Date().getTime()) {
                 botCheckMap.remove(player);
