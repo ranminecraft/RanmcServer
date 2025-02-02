@@ -11,8 +11,6 @@ import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Properties;
-
 import static cc.ranmc.server.constant.Data.AUTHOR;
 import static cc.ranmc.server.constant.Data.BANLIST_PATH;
 import static cc.ranmc.server.constant.Data.BASE_PATH;
@@ -23,7 +21,7 @@ import static cc.ranmc.server.constant.Data.PORT;
 import static cc.ranmc.server.constant.Data.VERIFY_PATH;
 import static cc.ranmc.server.constant.Data.VERSION;
 import static cc.ranmc.server.constant.Data.WEB_SITE;
-import static io.github.biezhi.ome.OhMyEmail.defaultConfig;
+import static io.github.biezhi.ome.OhMyEmail.SMTP_QQ;
 
 @Getter
 public final class Main {
@@ -40,12 +38,13 @@ public final class Main {
         System.out.println("-----------------------");
 
         // 初始化邮件
-        Properties props = defaultConfig(false);
+        /*Properties props = defaultConfig(false);
         props.put("mail.smtp.ssl.enable", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp.sohu.com");
         props.put("mail.smtp.port", "465");
-        OhMyEmail.config(props, "minelive@sohu.com", EMAIL_PWD);
+        OhMyEmail.config(props, "minelive@sohu.com", EMAIL_PWD);*/
+        OhMyEmail.config(SMTP_QQ(false), "xyfwdy@qq.com", EMAIL_PWD);
 
         HttpUtil.createServer(PORT)
                 .addAction(BASE_PATH, new BaseHandler()::handle)
