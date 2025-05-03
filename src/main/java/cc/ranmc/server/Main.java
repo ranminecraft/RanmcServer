@@ -1,26 +1,13 @@
 package cc.ranmc.server;
 
-import cc.ranmc.server.network.BanlistHandler;
-import cc.ranmc.server.network.BaseHandler;
-import cc.ranmc.server.network.BroadcastHandler;
-import cc.ranmc.server.network.CheckHandler;
-import cc.ranmc.server.network.VerifyHandler;
+import cc.ranmc.server.network.*;
 import cn.hutool.http.HttpUtil;
 import io.github.biezhi.ome.OhMyEmail;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static cc.ranmc.server.constant.Data.AUTHOR;
-import static cc.ranmc.server.constant.Data.BANLIST_PATH;
-import static cc.ranmc.server.constant.Data.BASE_PATH;
-import static cc.ranmc.server.constant.Data.BROADCAST_PATH;
-import static cc.ranmc.server.constant.Data.CHECK_PATH;
-import static cc.ranmc.server.constant.Data.EMAIL_PWD;
-import static cc.ranmc.server.constant.Data.PORT;
-import static cc.ranmc.server.constant.Data.VERIFY_PATH;
-import static cc.ranmc.server.constant.Data.VERSION;
-import static cc.ranmc.server.constant.Data.WEB_SITE;
+import static cc.ranmc.server.constant.Data.*;
 import static io.github.biezhi.ome.OhMyEmail.SMTP_QQ;
 
 @Getter
@@ -52,6 +39,7 @@ public final class Main {
                 .addAction(BROADCAST_PATH, new BroadcastHandler()::handle)
                 .addAction(VERIFY_PATH, new VerifyHandler()::handle)
                 .addAction(CHECK_PATH, new CheckHandler()::handle)
+                //.addAction(AUTH_PATH, new AuthHandler()::handle)
                 .start();
 
         getLogger().info("已成功运行在端口" + PORT);

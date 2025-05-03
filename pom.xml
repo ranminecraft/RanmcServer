@@ -18,14 +18,14 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-http</artifactId>
-            <version>5.8.35</version>
+            <version>5.8.37</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-json</artifactId>
-            <version>5.8.35</version>
+            <version>5.8.37</version>
             <scope>compile</scope>
         </dependency>
 
@@ -68,7 +68,7 @@
             <groupId>cc.ranmc</groupId>
             <artifactId>Ranmc</artifactId>
             <version>RELEASE</version>
-            <systemPath>D:/Project/Ranmc.jar</systemPath>
+            <systemPath>/users/rain/Desktop/Project/Ranmc.jar</systemPath>
             <scope>system</scope>
         </dependency>
 
