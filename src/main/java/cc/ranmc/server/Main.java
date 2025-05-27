@@ -43,10 +43,9 @@ public final class Main {
         Properties props = defaultConfig(false);
         props.put("mail.smtp.ssl.enable", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.sohu.com");
+        props.put("mail.smtp.host", "smtpdm.aliyun.com");
         props.put("mail.smtp.port", "465");
-        OhMyEmail.config(props, "minelive@sohu.com", EMAIL_PWD);
-        //OhMyEmail.config(SMTP_QQ(false), "xyfwdy@qq.com", EMAIL_PWD);
+        OhMyEmail.config(props, "bot@ranmc.cc", EMAIL_PWD);
 
         HttpUtil.createServer(PORT)
                 .addAction(BASE_PATH, new BaseHandler()::handle)
