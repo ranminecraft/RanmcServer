@@ -4,43 +4,44 @@ import cc.ranmc.server.bean.VerifyBean;
 import cc.ranmc.server.constant.Data;
 import cc.ranmc.server.constant.Prams;
 import cc.ranmc.server.util.VerifyUtil;
-import cn.hutool.http.ContentType;
-import cn.hutool.http.server.HttpServerRequest;
-import cn.hutool.http.server.HttpServerResponse;
-import cn.hutool.json.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
+import io.javalin.http.Context;
+import io.javalin.http.HandlerType;
+
+import java.util.Objects;
 
 import static cc.ranmc.server.constant.Code.BAD_REQUEST;
 
-public class VerifyHandler extends BaseHandler {
+public class VerifyHandler {
 
-    @Override
-    public void handle(HttpServerRequest req, HttpServerResponse res) {
+    public static void handle(Context context) {
 
         // 允许跨域
-        res.addHeader("Access-Control-Allow-Origin", "*");
-        res.addHeader("Access-Control-Allow-Methods", "*");
-        res.addHeader("Access-Control-Allow-Headers", "*");
-        res.addHeader("Access-Control-Max-Age", "*");
-        res.addHeader("Access-Control-Allow-Credentials", "true");
-        if ("OPTIONS".equals(req.getMethod())) {
-            res.sendOk();
+        context.header("Access-Control-Allow-Origin", "*");
+        context.header("Access-Control-Allow-Methods", "*");
+        context.header("Access-Control-Allow-Headers", "*");
+        context.header("Access-Control-Max-Age", "*");
+        context.header("Access-Control-Allow-Credentials", "true");
+        if (HandlerType.OPTIONS == context.method()) {
+            context.status(200);
             return;
         }
+        context.contentType("application/json");
 
-        if (req.getParams().containsKey(Prams.TOKEN) &&
-                req.getParams(Prams.TOKEN).getFirst().equals(Data.TOKEN)) {
+        if (context.queryParamMap().containsKey(Prams.TOKEN) &&
+                Data.TOKEN.equals(context.queryParam(Prams.TOKEN))) {
             JSONObject json = new JSONObject();
-            if (req.getParams().containsKey(Prams.EMAIL) &&
-                    req.getParams().containsKey(Prams.MODE) &&
-                    req.getParams().containsKey(Prams.PLAYER)) {
-                json.set(Prams.CODE, VerifyUtil.check(
-                        req.getParams(Prams.PLAYER).getFirst(),
-                        req.getParams(Prams.EMAIL).getFirst(),
-                        req.getParams(Prams.MODE).getFirst()));
+            if (context.queryParamMap().containsKey(Prams.EMAIL) &&
+                    context.queryParamMap().containsKey(Prams.MODE) &&
+                    context.queryParamMap().containsKey(Prams.PLAYER)) {
+                json.put(Prams.CODE, VerifyUtil.check(
+                        context.queryParam(Prams.PLAYER),
+                        context.queryParam(Prams.EMAIL),
+                        Objects.requireNonNull(context.queryParam(Prams.MODE))));
             } else {
-                json.set(Prams.CODE, BAD_REQUEST);
+                json.put(Prams.CODE, BAD_REQUEST);
             }
-            res.write(json.toString(), ContentType.JSON.toString());
+            context.result(json.toString());
             return;
         }
 
@@ -48,7 +49,7 @@ public class VerifyHandler extends BaseHandler {
         for (String qq : VerifyUtil.getVerifyMap().keySet()) {
             VerifyBean verifyBean = VerifyUtil.getVerifyMap().get(qq);
             String key = verifyBean.getKey();
-            if (!key.isEmpty() && req.getParams(Prams.KEY).getFirst().equals(key)) {
+            if (!key.isEmpty() && key.equals(context.queryParam(Prams.KEY))) {
                 if (verifyBean.isPass()) {
                     result = "已确认，请勿重复操作。";
                 } else {
@@ -58,8 +59,8 @@ public class VerifyHandler extends BaseHandler {
                 break;
             }
         }
-
-        res.write(result, ContentType.TEXT_PLAIN.toString());
+        context.contentType("text/plain");
+        context.result(result);
     }
 }
 

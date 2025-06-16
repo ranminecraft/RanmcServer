@@ -4,54 +4,53 @@ import cc.ranmc.server.bean.BotCheckBean;
 import cc.ranmc.server.constant.Data;
 import cc.ranmc.server.constant.Prams;
 import cc.ranmc.server.util.BotCheckUtil;
-import cn.hutool.http.ContentType;
-import cn.hutool.http.server.HttpServerRequest;
-import cn.hutool.http.server.HttpServerResponse;
-import cn.hutool.json.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
+import io.javalin.http.Context;
+import io.javalin.http.HandlerType;
 
 import static cc.ranmc.server.constant.Code.BAD_REQUEST;
 import static cc.ranmc.server.constant.Data.TOKEN;
 
-public class CheckHandler extends BaseHandler {
+public class CheckHandler {
 
-    @Override
-    public void handle(HttpServerRequest req, HttpServerResponse res) {
+    public static void handle(Context context) {
 
         // 允许跨域
-        res.addHeader("Access-Control-Allow-Origin", "*");
-        res.addHeader("Access-Control-Allow-Methods", "*");
-        res.addHeader("Access-Control-Allow-Headers", "*");
-        res.addHeader("Access-Control-Max-Age", "*");
-        res.addHeader("Access-Control-Allow-Credentials", "true");
-        if ("OPTIONS".equals(req.getMethod())) {
-            res.sendOk();
+        context.header("Access-Control-Allow-Origin", "*");
+        context.header("Access-Control-Allow-Methods", "*");
+        context.header("Access-Control-Allow-Headers", "*");
+        context.header("Access-Control-Max-Age", "*");
+        context.header("Access-Control-Allow-Credentials", "true");
+        if (HandlerType.OPTIONS == context.method()) {
+            context.status(200);
             return;
         }
+        context.contentType("application/json");
 
-        if (req.getParams().containsKey(Prams.TOKEN) &&
-                req.getParams(Prams.TOKEN).getFirst().equals(Data.TOKEN)) {
+        if (context.queryParamMap().containsKey(Prams.TOKEN) &&
+                Data.TOKEN.equals(context.queryParam(Prams.TOKEN))) {
             JSONObject json = new JSONObject();
-            if (req.getParams().containsKey(Prams.PLAYER)) {
-                json = BotCheckUtil.check(req.getParams(Prams.PLAYER).getFirst());
+            if (context.queryParamMap().containsKey(Prams.PLAYER)) {
+                json = BotCheckUtil.check(context.queryParam(Prams.PLAYER));
             } else {
-                json.set(Prams.CODE, BAD_REQUEST);
+                json.put(Prams.CODE, BAD_REQUEST);
             }
-            res.write(json.toString(), ContentType.JSON.toString());
+            context.result(json.toString());
             return;
         }
         int code = 3;
-        if (req.getHeaders().containsKey("RanmcToken") &&
-                req.getHeader("RanmcToken").equals(TOKEN) &&
-                req.getParams().containsKey(Prams.KEY)) {
+        if (context.header("RanmcToken") != null &&
+                TOKEN.equals(context.header("RanmcToken")) &&
+                context.queryParamMap().containsKey(Prams.KEY)) {
             for (String player : BotCheckUtil.getBotCheckMap().keySet()) {
                 BotCheckBean botCheckBean = BotCheckUtil.getBotCheckMap().get(player);
                 String key = botCheckBean.getKey();
-                if (!key.isEmpty() && req.getParams(Prams.KEY).getFirst().equals(key)) {
+                if (!key.isEmpty() && key.equals(context.queryParam(Prams.KEY))) {
                     if (botCheckBean.isPass()) {
                         code = 2;
                     } else {
-                        botCheckBean.setAddress(req.getClientIP("X-Real-IP"));
-                        botCheckBean.setAgent(req.getUserAgentStr());
+                        botCheckBean.setAddress(context.header("X-Real-IP"));
+                        botCheckBean.setAgent(context.header("user-agent"));
                         botCheckBean.setPass(true);
                         code = 1;
                     }
@@ -59,7 +58,8 @@ public class CheckHandler extends BaseHandler {
                 }
             }
         }
-        res.write("<html><head><meta http-equiv=\"refresh\" content=\"0;url=https://www.ranmc.cc/check.html?result=" + code + "\"></head><body></body></html>", ContentType.TEXT_HTML.toString());
+        context.contentType("text/html");
+        context.result("<html><head><meta http-equiv=\"refresh\" content=\"0;url=https://www.ranmc.cc/check.html?result=" + code + "\"></head><body></body></html>");
     }
 }
 

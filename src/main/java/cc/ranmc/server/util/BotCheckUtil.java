@@ -4,7 +4,7 @@ import cc.ranmc.server.Main;
 import cc.ranmc.server.bean.BotCheckBean;
 import cc.ranmc.server.constant.Code;
 import cc.ranmc.server.constant.Prams;
-import cn.hutool.json.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import lombok.Getter;
 
 import java.util.Date;
@@ -27,14 +27,14 @@ public class BotCheckUtil {
                 Main.getLogger().info("{}({})通过人机验证",
                         player,
                         botCheckBean.getAddress());
-                json.set(Prams.CODE, Code.SUCCESS);
+                json.put(Prams.CODE, Code.SUCCESS);
             } else if (botCheckBean.getTime() < new Date().getTime()) {
                 botCheckMap.remove(player);
                 Main.getLogger().info("{}人机验证超时", player);
-                json.set(Prams.CODE, Code.TIME_OUT);
+                json.put(Prams.CODE, Code.TIME_OUT);
             } else {
-                json.set(Prams.URL, BOT_CHECK_WEB_SITE + botCheckBean.getKey());
-                json.set(Prams.CODE, Code.WAITING);
+                json.put(Prams.URL, BOT_CHECK_WEB_SITE + botCheckBean.getKey());
+                json.put(Prams.CODE, Code.WAITING);
             }
         } else {
             String key = KeyGenerator.get();
@@ -42,8 +42,8 @@ public class BotCheckUtil {
             botCheckBean.setPlayer(player);
             botCheckBean.setKey(key);
             botCheckMap.put(player, botCheckBean);
-            json.set(Prams.URL, BOT_CHECK_WEB_SITE + key);
-            json.set(Prams.CODE, Code.WAITING);
+            json.put(Prams.URL, BOT_CHECK_WEB_SITE + key);
+            json.put(Prams.CODE, Code.WAITING);
         }
         return json;
     }

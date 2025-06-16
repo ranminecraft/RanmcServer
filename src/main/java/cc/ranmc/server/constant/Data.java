@@ -4,7 +4,7 @@ import cc.ranmc.server.util.DataFile;
 
 public class Data {
     public static final String AUTHOR = "Ranica";
-    public static final String VERSION = "Release 4.2";
+    public static final String VERSION = "Release 5.0";
     public static final String WEB_SITE = "https://www.ranmc.cc/";
     public static final String VERIFY_HOST = "verify.ranmc.cc";
     public static final String BOT_CHECK_WEB_SITE = "https://" + VERIFY_HOST + "/check?key=";
