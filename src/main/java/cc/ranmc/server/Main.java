@@ -47,7 +47,6 @@ public final class Main {
         props.put("mail.smtp.port", "465");
         OhMyEmail.config(props, "bot@ranmc.cc", EMAIL_PWD);
 
-
         Javalin.create()
                 .get(BASE_PATH, BaseHandler::handle)
                 .get(BANLIST_PATH, BanlistHandler::handle)
