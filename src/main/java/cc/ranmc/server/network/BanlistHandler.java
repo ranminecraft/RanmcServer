@@ -4,7 +4,7 @@ import cc.ranmc.server.Main;
 import cc.ranmc.server.constant.Code;
 import cc.ranmc.server.constant.Prams;
 import cc.ranmc.server.util.DataFile;
-import cc.ranmc.sqlite.SQLite;
+import cc.ranmc.sql.SQLBase;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import io.javalin.http.Context;
@@ -14,14 +14,13 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class BanlistHandler {
 
-    private static final SQLite data = new SQLite(DataFile.read("sqlite"));
+    private static final SQLBase data = new SQLBase(DataFile.read("sqlite"));
     private static int lastUpdate = -1;
     private static List<JSONObject> banlist;
 
@@ -111,14 +110,14 @@ public class BanlistHandler {
         banlist = new ArrayList<>();
         AtomicInteger id = new AtomicInteger();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        data.selectList("BANLIST").forEach(map -> {
+        data.selectList("BANLIST").forEach(row -> {
             id.getAndIncrement();
             JSONObject json = new JSONObject();
-            json.put("player", map.get("Player"));
-            json.put("reason", map.get("Reason"));
-            json.put("banTime", map.get("Date"));
-            json.put("releaseTime", format.format(new Date(Long.parseLong(map.get("Time")))));
-            json.put("operator", map.get("Admin"));
+            json.put("player", row.getString("Player"));
+            json.put("reason", row.getString("Reason"));
+            json.put("banTime", row.getString("Date"));
+            json.put("releaseTime", format.format(row.getLong("Time")));
+            json.put("operator", row.getString("Admin"));
             json.put("id", id.get());
             banlist.add(json);
         });
