@@ -15,7 +15,6 @@ public class Data {
     public static final String BROADCAST_PATH = "/broadcast";
     public static final String BANLIST_PATH = "/banlist";
     public static final String CHECK_PATH = "/check";
-    public static final String AUTH_PATH = "/auth";
     public static final String TOKEN = DataFile.read("token");
     public static final String EMAIL_PWD = DataFile.read("email");
 }
