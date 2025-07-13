@@ -1,5 +1,6 @@
 package cc.ranmc.server.network;
 
+import cc.ranmc.constant.SQLKey;
 import cc.ranmc.server.Main;
 import cc.ranmc.server.constant.Code;
 import cc.ranmc.server.constant.Prams;
@@ -63,7 +64,7 @@ public class BanlistHandler {
                 String searchName = context.queryParam(Prams.PLAYER);
                 if (searchName != null &&
                         !searchName.isEmpty() &&
-                        obj.getString("player").toLowerCase().
+                        obj.getString(SQLKey.PLAYER).toLowerCase().
                                 contains(searchName.toLowerCase())) {
                     list.add(obj);
                 }
@@ -73,8 +74,7 @@ public class BanlistHandler {
         }
         // 是否倒叙
         if (context.queryParamMap().containsKey(Prams.SORT_ORDER) &&
-                "desc"
-                        .equalsIgnoreCase(context.queryParam(Prams.SORT_ORDER))) {
+                "desc".equalsIgnoreCase(context.queryParam(Prams.SORT_ORDER))) {
             Collections.reverse(list);
         }
         // 获取单页显示数量
@@ -110,14 +110,14 @@ public class BanlistHandler {
         banlist = new ArrayList<>();
         AtomicInteger id = new AtomicInteger();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        data.selectList("BANLIST").forEach(row -> {
+        data.selectList(SQLKey.BANLIST).forEach(row -> {
             id.getAndIncrement();
             JSONObject json = new JSONObject();
-            json.put("player", row.getString("Player"));
-            json.put("reason", row.getString("Reason"));
-            json.put("banTime", row.getString("Date"));
-            json.put("releaseTime", format.format(row.getLong("Time")));
-            json.put("operator", row.getString("Admin"));
+            json.put("player", row.getString(SQLKey.PLAYER));
+            json.put("reason", row.getString(SQLKey.REASON));
+            json.put("banTime", row.getString(SQLKey.DATE));
+            json.put("releaseTime", format.format(row.getLong(SQLKey.TIME)));
+            json.put("operator", row.getString(SQLKey.ADMIN));
             json.put("id", id.get());
             banlist.add(json);
         });
