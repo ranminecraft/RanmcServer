@@ -35,7 +35,7 @@ public class VerifyUtil {
                 return Code.SUCCESS;
             } else if (verifyBean.getTime() < new Date().getTime()) {
                 verifyMap.remove(email);
-                Main.getLogger().info("等待确认超时：{}", email);
+                Main.getLogger().warn("等待确认超时：{}", email);
                 return Code.TIME_OUT;
             }
         } else {
@@ -55,7 +55,7 @@ public class VerifyUtil {
                                 .replace("%url%", url)
                                 .replace("%action%", action))
                         .send();
-                Main.getLogger().error("发送邮件成功:{}", email);
+                Main.getLogger().info("发送邮件成功:{}", email);
             } catch (SendMailException e) {
                 Main.getLogger().error(e.getMessage());
                 Main.getLogger().error("发送邮件失败:{}", email);

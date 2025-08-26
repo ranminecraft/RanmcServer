@@ -43,7 +43,7 @@ public final class Main {
         Properties props = defaultConfig(false);
         props.put("mail.smtp.ssl.enable", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtpdm.aliyun.com");
+        props.put("mail.smtp.host", "smtp.qcloudmail.com");
         props.put("mail.smtp.port", "465");
         OhMyEmail.config(props, "bot@ranmc.cc", EMAIL_PWD);
 

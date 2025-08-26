@@ -22,9 +22,11 @@ public class Email {
                         祝您游戏愉快
                         <br>系统邮件，请勿回复
                         <br>桃花源丨纯净生存 呈上
+                        <br>服务器群号：<a style="color: #3fc1c9" href='http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=c3Mc6vrvjYh6KL8_ssFS7CVS5I8yejlp&authKey=0iI8Rw8rDgvxpanamKyJ7vJfMHDakbYS8ofxw%2BqQy9863RplPn91T3R7aHNBXQGV&noverify=0&group_code=429357720'>429357720</a>
                         <br>服务器地址：ranmc.cc
                         <br>备用地址壹：b1.ranmc.cc
                         <br>备用地址贰：b2.ranmc.cc
+                        <br>备用地址贰：b3.ranmc.cc
                     </p>
                 </div>
                 <br>
