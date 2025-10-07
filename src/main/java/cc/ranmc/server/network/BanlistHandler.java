@@ -12,7 +12,6 @@ import io.javalin.http.Context;
 import io.javalin.http.HandlerType;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,7 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class BanlistHandler {
 
     private static final SQLBase data = new SQLBase(DataFile.read("sqlite"));
-    private static int lastUpdate = -1;
+    private static long lastUpdate = 0;
     private static List<JSONObject> banlist;
 
     public static void handle(Context context) {
@@ -104,9 +103,9 @@ public class BanlistHandler {
      * 更新列表
      */
     private static void updateBanlist() {
-        int day = LocalDateTime.now().getDayOfYear();
-        if (lastUpdate == day) return;
-        lastUpdate = day;
+        long now = System.currentTimeMillis();
+        if (lastUpdate + (10 * 60 * 1000) > now) return;
+        lastUpdate = now;
         banlist = new ArrayList<>();
         AtomicInteger id = new AtomicInteger();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
