@@ -34,7 +34,7 @@ public final class Main {
     @Getter
     public static final Logger logger = LoggerFactory.getLogger(Main.class);
 
-    public static void main(String[] args) {
+    static void main() {
 
         System.out.println("-----------------------");
         System.out.println("RanmcServer By " + AUTHOR);

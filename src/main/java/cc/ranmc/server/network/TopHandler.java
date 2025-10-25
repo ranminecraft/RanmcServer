@@ -28,11 +28,11 @@ public class TopHandler {
     private static final SQLBase pvpData = new SQLBase(CONFIG.getString("sqlite"));
     private static final SQLBase tpsData = new SQLBase(CONFIG.getString("tps"));
     private static long seasonLastUpdate = 0;
-    private static Map<String, Integer> seasonRows = new LinkedHashMap<>();
+    private static final Map<String, Integer> seasonRows = new LinkedHashMap<>();
     private static long tpsLastUpdate = 0;
     private static JSONArray tpsRows = new JSONArray();
     private static long pvpLastUpdate = 0;
-    private static Map<String, Integer> pvpRows = new LinkedHashMap<>();
+    private static final Map<String, Integer> pvpRows = new LinkedHashMap<>();
 
     public static void handle(Context context) {
         // 允许跨域
