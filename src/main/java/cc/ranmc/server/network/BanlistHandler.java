@@ -4,7 +4,6 @@ import cc.ranmc.constant.SQLKey;
 import cc.ranmc.server.Main;
 import cc.ranmc.server.constant.Code;
 import cc.ranmc.server.constant.Prams;
-import cc.ranmc.server.util.DataFile;
 import cc.ranmc.sql.SQLBase;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
@@ -18,9 +17,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static cc.ranmc.server.util.ConfigUtil.CONFIG;
+
 public class BanlistHandler {
 
-    private static final SQLBase data = new SQLBase(DataFile.read("sqlite"));
+    private static final SQLBase data = new SQLBase(CONFIG.getString("sqlite"));
     private static long lastUpdate = 0;
     private static List<JSONObject> banlist;
 
