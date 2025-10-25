@@ -128,7 +128,7 @@ public class TopHandler {
         List<SQLRow> tpsList = tpsData.selectList("TPS",
                 new SQLFilter()
                         .order("CAST(ID AS INT) DESC")
-                        .limit(48));
+                        .limit(72));
         tpsRows.clear();
         for (SQLRow row : tpsList) {
             JSONObject obj = new JSONObject();
