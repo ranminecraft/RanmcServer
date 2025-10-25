@@ -129,7 +129,7 @@ public class TopHandler {
                 new SQLFilter()
                         .order("CAST(ID AS INT) DESC")
                         .limit(48));
-        tpsRows = new JSONArray();
+        tpsRows.clear();
         for (SQLRow row : tpsList) {
             JSONObject obj = new JSONObject();
             obj.put(SQLKey.DATE, row.getString(SQLKey.DATE));
@@ -194,21 +194,9 @@ public class TopHandler {
         if (point >= 1900) text = "钻石Ⅲ";
         if (point >= 2000) text = "钻石Ⅱ";
         if (point >= 2100) text = "钻石Ⅰ";
-        if (point >= 2200) {
-            text = "翡翠";
-            if (isTop(point)) text = "巅峰";
-        }
+        if (point >= 2200) text = "翡翠";
         if (point < 1000) return text;
         return text;
-    }
-
-    private static boolean isTop(int point) {
-        SQLFilter filter = new SQLFilter()
-                .whereMoreThan(SQLKey.SEASON_COUNT, 3 - 1)
-                .order("CAST(Point AS INT) DESC")
-                .limit(1);
-        List<SQLRow> list = pvpData.selectList(SQLKey.FIGHT, filter);
-        return !list.isEmpty() && point == list.getFirst().getInt(SQLKey.POINT, 0);
     }
 }
 
