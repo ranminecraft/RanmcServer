@@ -68,7 +68,7 @@ public class StatusHandler {
         } else {
             json.put(Prams.CODE, Code.UNKOWN_REQUEST);
         }
-        Main.getLogger().info("{}请求{}排行榜",
+        Main.getLogger().info("{}请求{}数据",
                 context.header("X-Real-IP"), type);
         context.result(json.toString());
     }
