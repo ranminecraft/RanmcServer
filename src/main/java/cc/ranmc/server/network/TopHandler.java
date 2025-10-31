@@ -9,6 +9,7 @@ import cc.ranmc.sql.SQLFilter;
 import cc.ranmc.sql.SQLRow;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
+import io.javalin.http.ContentType;
 import io.javalin.http.Context;
 import io.javalin.http.HandlerType;
 
@@ -41,11 +42,7 @@ public class TopHandler {
         context.header("Access-Control-Allow-Headers", "*");
         context.header("Access-Control-Max-Age", "*");
         context.header("Access-Control-Allow-Credentials", "true");
-        if (HandlerType.OPTIONS == context.method()) {
-            context.status(200);
-            return;
-        }
-        context.contentType("application/json");
+        context.contentType(ContentType.APPLICATION_JSON);
 
         JSONObject json = new JSONObject();
         // 检查请求

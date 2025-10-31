@@ -5,8 +5,8 @@ import cc.ranmc.server.constant.Data;
 import cc.ranmc.server.constant.Prams;
 import cc.ranmc.server.util.VerifyUtil;
 import com.alibaba.fastjson2.JSONObject;
+import io.javalin.http.ContentType;
 import io.javalin.http.Context;
-import io.javalin.http.HandlerType;
 
 import java.util.Objects;
 
@@ -22,11 +22,8 @@ public class VerifyHandler {
         context.header("Access-Control-Allow-Headers", "*");
         context.header("Access-Control-Max-Age", "*");
         context.header("Access-Control-Allow-Credentials", "true");
-        if (HandlerType.OPTIONS == context.method()) {
-            context.status(200);
-            return;
-        }
-        context.contentType("application/json");
+
+        context.contentType(ContentType.APPLICATION_JSON);
 
         if (context.queryParamMap().containsKey(Prams.TOKEN) &&
                 Data.TOKEN.equals(context.queryParam(Prams.TOKEN))) {
@@ -59,7 +56,7 @@ public class VerifyHandler {
                 break;
             }
         }
-        context.contentType("text/plain");
+        context.contentType(ContentType.TEXT_PLAIN);
         context.result(result);
     }
 }

@@ -7,12 +7,13 @@ import cc.ranmc.server.constant.Prams;
 import com.alibaba.fastjson2.JSONObject;
 import io.github.biezhi.ome.OhMyEmail;
 import io.github.biezhi.ome.SendMailException;
+import io.javalin.http.ContentType;
 import io.javalin.http.Context;
 
 public class BroadcastHandler {
 
     public static void handle(Context context) {
-        context.contentType("application/json");
+        context.contentType(ContentType.APPLICATION_JSON);
         JSONObject json = new JSONObject();
         if (!context.queryParamMap().containsKey(Prams.TOKEN) ||
                 !Data.TOKEN.equals(context.queryParam(Prams.TOKEN))) {

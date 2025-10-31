@@ -7,8 +7,8 @@ import cc.ranmc.server.constant.Prams;
 import cc.ranmc.sql.SQLBase;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
+import io.javalin.http.ContentType;
 import io.javalin.http.Context;
-import io.javalin.http.HandlerType;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,18 +33,15 @@ public class BanlistHandler {
         context.header("Access-Control-Allow-Headers", "*");
         context.header("Access-Control-Max-Age", "*");
         context.header("Access-Control-Allow-Credentials", "true");
-        if (HandlerType.OPTIONS == context.method()) {
-            context.status(200);
-            return;
-        }
-        context.contentType("application/json");
+
+        context.contentType(ContentType.APPLICATION_JSON);
         Main.getLogger().info("{}请求封禁列表",
                 context.header("X-Real-IP"));
 
         JSONObject json = new JSONObject();
 
         // 检查请求
-        if (HandlerType.GET != context.method() || !context.queryParamMap().containsKey(Prams.PAGE)) {
+        if (!context.queryParamMap().containsKey(Prams.PAGE)) {
             json.put(Prams.CODE, Code.UNKOWN_REQUEST);
             context.status(Code.UNKOWN_REQUEST);
             context.result(json.toString());
