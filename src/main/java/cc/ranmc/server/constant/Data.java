@@ -13,7 +13,7 @@ public class Data {
     public static final String BASE_PATH = "/";
     public static final String VERIFY_PATH = "/verify";
     public static final String BROADCAST_PATH = "/broadcast";
-    public static final String TOP_PATH = "/top";
+    public static final String STATUS_PATH = "/status";
     public static final String BANLIST_PATH = "/banlist";
     public static final String CHECK_PATH = "/check";
     public static final String TOKEN = CONFIG.getString("token");

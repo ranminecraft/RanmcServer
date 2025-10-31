@@ -4,7 +4,7 @@ import cc.ranmc.server.network.BanlistHandler;
 import cc.ranmc.server.network.BaseHandler;
 import cc.ranmc.server.network.BroadcastHandler;
 import cc.ranmc.server.network.CheckHandler;
-import cc.ranmc.server.network.TopHandler;
+import cc.ranmc.server.network.StatusHandler;
 import cc.ranmc.server.network.VerifyHandler;
 import cc.ranmc.server.util.ConfigUtil;
 import io.github.biezhi.ome.OhMyEmail;
@@ -22,7 +22,7 @@ import static cc.ranmc.server.constant.Data.BROADCAST_PATH;
 import static cc.ranmc.server.constant.Data.CHECK_PATH;
 import static cc.ranmc.server.constant.Data.EMAIL_PWD;
 import static cc.ranmc.server.constant.Data.PORT;
-import static cc.ranmc.server.constant.Data.TOP_PATH;
+import static cc.ranmc.server.constant.Data.STATUS_PATH;
 import static cc.ranmc.server.constant.Data.VERIFY_PATH;
 import static cc.ranmc.server.constant.Data.VERSION;
 import static cc.ranmc.server.constant.Data.WEB_SITE;
@@ -57,7 +57,7 @@ public final class Main {
                 .get(BASE_PATH, BaseHandler::handle)
                 .get(BANLIST_PATH, BanlistHandler::handle)
                 .get(BROADCAST_PATH, BroadcastHandler::handle)
-                .get(TOP_PATH, TopHandler::handle)
+                .get(STATUS_PATH, StatusHandler::handle)
                 .get(VERIFY_PATH, VerifyHandler::handle)
                 .get(CHECK_PATH, CheckHandler::handle)
                 .start(PORT);

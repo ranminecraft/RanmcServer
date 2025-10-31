@@ -25,7 +25,7 @@ import java.util.Map;
 
 import static cc.ranmc.server.util.ConfigUtil.CONFIG;
 
-public class TopHandler {
+public class StatusHandler {
     private static final SQLBase pvpData = new SQLBase(CONFIG.getString("sqlite"));
     private static final SQLBase tpsData = new SQLBase(CONFIG.getString("tps"));
     private static long seasonLastUpdate = 0;
