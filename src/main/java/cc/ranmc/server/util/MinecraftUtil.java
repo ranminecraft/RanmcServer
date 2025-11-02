@@ -8,6 +8,7 @@ import lombok.Getter;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Properties;
 import java.util.TreeMap;
 
 import static cc.ranmc.server.network.BroadcastHandler.broadcast;
@@ -72,12 +73,23 @@ public class MinecraftUtil {
                 "login_token=" + ConfigUtil.CONFIG.getString("dnspod") +
                         "&domain=ranmc.cc&sub_domain=_minecraft._tcp&record_type=SRV&record_line_id=0&value=" + value + "&record_id=" + recordId,
                 body -> {
-                    Main.getLogger().info(body);
                     if (!body.startsWith("{")) {
                         Main.getLogger().warn("修改记录列表失败");
                         return;
                     }
+                    Main.getLogger().warn("修改主线记录 {} 结果{}", value,
+                            unicode(JSONObject.parseObject(body).getJSONObject("status").getString("message")));
                 });
+    }
+
+    private static String unicode(String unicode) {
+        Properties p = new Properties();
+        try {
+            p.load(new java.io.StringReader("key=" + unicode));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return p.getProperty("key");
     }
 
     private static boolean isServerOnline(String srvValue) {
