@@ -16,4 +16,5 @@ public class Prams {
     public static final String URL = "url";
     public static final String TYPE = "type";
     public static final String DATA = "data";
+    public static final String TIME = "time";
 }

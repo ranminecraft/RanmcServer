@@ -70,6 +70,7 @@ public class ChartHandler {
             updateSeasonData();
             json.put(Prams.CODE, Code.SUCCESS);
             json.put(Prams.DATA, MinecraftUtil.getServerStatusMap());
+            json.put(Prams.TIME, MinecraftUtil.getLastCheckTime());
         } else {
             json.put(Prams.CODE, Code.UNKOWN_REQUEST);
         }

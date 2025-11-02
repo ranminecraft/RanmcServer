@@ -19,6 +19,8 @@ public class MinecraftUtil {
     private static final Map<String,Boolean> serverStatusMap = new TreeMap<>();
     private static final Map<String,String> serverSrvMap = new TreeMap<>();
     private static long recordId = 0;
+    @Getter
+    private static long lastCheckTime = 0;
 
     public static void updateServerStatus() {
         HttpUtil.post("https://dnsapi.cn/Record.List",
@@ -28,6 +30,7 @@ public class MinecraftUtil {
                         Main.getLogger().warn("获取记录列表失败");
                         return;
                     }
+                    lastCheckTime = System.currentTimeMillis();
                     serverStatusMap.clear();
                     JSONObject.parseObject(body).getJSONArray("records").forEach(record -> {
                         JSONObject json = JSONObject.parseObject(record.toString());
