@@ -93,7 +93,7 @@ public class BanlistHandler {
             if (i >= list.size()) break;
             array.add(list.get(i));
         }
-        json.put(Prams.ROWS, array);
+        json.put(Prams.DATA, array);
         context.result(json.toString());
     }
 

@@ -4,6 +4,7 @@ import cc.ranmc.constant.SQLKey;
 import cc.ranmc.server.Main;
 import cc.ranmc.server.constant.Code;
 import cc.ranmc.server.constant.Prams;
+import cc.ranmc.server.util.MinecraftUtil;
 import cc.ranmc.sql.SQLBase;
 import cc.ranmc.sql.SQLFilter;
 import cc.ranmc.sql.SQLRow;
@@ -56,15 +57,19 @@ public class ChartHandler {
         if ("pvp".equalsIgnoreCase(type)) {
             updatePvpData();
             json.put(Prams.CODE, Code.SUCCESS);
-            json.put(Prams.ROWS, pvpRows);
+            json.put(Prams.DATA, pvpRows);
         } else if ("tps".equalsIgnoreCase(type)) {
             updateTpsData();
             json.put(Prams.CODE, Code.SUCCESS);
-            json.put(Prams.ROWS, tpsRows);
+            json.put(Prams.DATA, tpsRows);
         } else if ("season".equalsIgnoreCase(type)) {
             updateSeasonData();
             json.put(Prams.CODE, Code.SUCCESS);
-            json.put(Prams.ROWS, seasonRows);
+            json.put(Prams.DATA, seasonRows);
+        } else if ("status".equalsIgnoreCase(type)) {
+            updateSeasonData();
+            json.put(Prams.CODE, Code.SUCCESS);
+            json.put(Prams.DATA, MinecraftUtil.getServerStatusMap());
         } else {
             json.put(Prams.CODE, Code.UNKOWN_REQUEST);
         }

@@ -3,10 +3,11 @@ package cc.ranmc.server;
 import cc.ranmc.server.network.BanlistHandler;
 import cc.ranmc.server.network.BaseHandler;
 import cc.ranmc.server.network.BroadcastHandler;
-import cc.ranmc.server.network.CheckHandler;
 import cc.ranmc.server.network.ChartHandler;
+import cc.ranmc.server.network.CheckHandler;
 import cc.ranmc.server.network.VerifyHandler;
 import cc.ranmc.server.util.ConfigUtil;
+import cc.ranmc.server.util.MinecraftUtil;
 import io.github.biezhi.ome.OhMyEmail;
 import io.javalin.Javalin;
 import lombok.Getter;
@@ -14,15 +15,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static cc.ranmc.server.constant.Data.AUTHOR;
 import static cc.ranmc.server.constant.Data.BANLIST_PATH;
 import static cc.ranmc.server.constant.Data.BASE_PATH;
 import static cc.ranmc.server.constant.Data.BROADCAST_PATH;
+import static cc.ranmc.server.constant.Data.CHART_PATH;
 import static cc.ranmc.server.constant.Data.CHECK_PATH;
 import static cc.ranmc.server.constant.Data.EMAIL_PWD;
 import static cc.ranmc.server.constant.Data.PORT;
-import static cc.ranmc.server.constant.Data.CHART_PATH;
 import static cc.ranmc.server.constant.Data.VERIFY_PATH;
 import static cc.ranmc.server.constant.Data.VERSION;
 import static cc.ranmc.server.constant.Data.WEB_SITE;
@@ -63,7 +66,13 @@ public final class Main {
                 .start(PORT);
 
         getLogger().info("已成功运行在端口" + PORT);
-    }
 
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                MinecraftUtil.updateServerStatus();
+            }
+        }, 0, 1000 * 60 * 5);
+    }
 
 }

@@ -24,22 +24,24 @@ public class BroadcastHandler {
         if (context.queryParamMap().containsKey(Prams.MSG)) {
             //String msg = URLDecoder.decode(map.get(Prams.MSG), StandardCharsets.UTF_8);
             String msg = context.queryParam(Prams.MSG);
-            try {
-                OhMyEmail.subject("服务器消息")
-                        .from("【桃花源】")
-                        .to("xyfwdy@qq.com")
-                        .html(msg)
-                        .send();
-                json.put(Prams.CODE, Code.SUCCESS);
-            } catch (SendMailException e) {
-                Main.getLogger().info("发送邮件失败：{}", e.getMessage());
-                json.put(Prams.CODE, Code.ERROR);
-            }
-            Main.getLogger().info("发出广播:{}", msg);
+            broadcast(msg);
+            Main.getLogger().info("发出广播{}", msg);
         } else {
             json.put(Prams.CODE, Code.UNKOWN_REQUEST);
         }
         context.result(json.toString());
+    }
+
+    public static void broadcast(String msg) {
+        try {
+            OhMyEmail.subject("服务器消息")
+                    .from("【桃花源】")
+                    .to("xyfwdy@qq.com")
+                    .html(msg)
+                    .send();
+        } catch (SendMailException e) {
+            Main.getLogger().info("发送邮件失败{}", e.getMessage());
+        }
     }
 }
 
