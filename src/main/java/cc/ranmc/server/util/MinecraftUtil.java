@@ -34,7 +34,7 @@ public class MinecraftUtil {
                         String name = json.getString("name");
                         String srv = json.getString("value");
                         if (name.startsWith("_minecraft._tcp.")) {
-                            String serverName = name.replace("_minecraft._tcp.", "") + "ranmc.cc";
+                            String serverName = name.replace("_minecraft._tcp.", "") + ".ranmc.cc";
                             serverStatusMap.put(serverName, isServerOnline(srv));
                             serverSrvMap.put(serverName, srv);
                         } else if (name.equals("_minecraft._tcp")) {
