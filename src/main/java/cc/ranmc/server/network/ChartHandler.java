@@ -158,7 +158,7 @@ public class ChartHandler {
         }
         int emerable = countMap.getOrDefault("翡翠", 0);
         int chapion = 0;
-        if (emerable >= 1) {
+        if (emerable > 0) {
             emerable --;
             chapion = 1;
         }
