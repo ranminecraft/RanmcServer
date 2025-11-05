@@ -27,7 +27,7 @@ public class BroadcastHandler {
             broadcast(msg);
             Main.getLogger().info("发出广播{}", msg);
         } else {
-            json.put(Prams.CODE, Code.UNKOWN_REQUEST);
+            json.put(Prams.CODE, Code.UNKNOWN_REQUEST);
         }
         context.result(json.toString());
     }

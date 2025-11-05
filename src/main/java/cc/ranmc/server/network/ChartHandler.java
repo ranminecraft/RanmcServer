@@ -48,8 +48,8 @@ public class ChartHandler {
         JSONObject json = new JSONObject();
         // 检查请求
         if (HandlerType.GET != context.method() || !context.queryParamMap().containsKey(Prams.TYPE)) {
-            json.put(Prams.CODE, Code.UNKOWN_REQUEST);
-            context.status(Code.UNKOWN_REQUEST);
+            json.put(Prams.CODE, Code.UNKNOWN_REQUEST);
+            context.status(Code.UNKNOWN_REQUEST);
             context.result(json.toString());
             return;
         }
@@ -72,7 +72,7 @@ public class ChartHandler {
             json.put(Prams.DATA, MinecraftUtil.getServerStatusMap());
             json.put(Prams.TIME, MinecraftUtil.getLastCheckTime());
         } else {
-            json.put(Prams.CODE, Code.UNKOWN_REQUEST);
+            json.put(Prams.CODE, Code.UNKNOWN_REQUEST);
         }
         Main.getLogger().info("{}请求{}数据",
                 context.header("X-Real-IP"), type);

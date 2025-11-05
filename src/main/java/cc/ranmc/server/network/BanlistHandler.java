@@ -42,8 +42,8 @@ public class BanlistHandler {
 
         // 检查请求
         if (!context.queryParamMap().containsKey(Prams.PAGE)) {
-            json.put(Prams.CODE, Code.UNKOWN_REQUEST);
-            context.status(Code.UNKOWN_REQUEST);
+            json.put(Prams.CODE, Code.UNKNOWN_REQUEST);
+            context.status(Code.UNKNOWN_REQUEST);
             context.result(json.toString());
             return;
         }
