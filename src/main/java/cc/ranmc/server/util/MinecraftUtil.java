@@ -21,6 +21,7 @@ public class MinecraftUtil {
     private static long recordId = 0;
     @Getter
     private static long lastCheckTime = 0;
+    private static boolean lastCheckStatus = true;
 
     public static void updateServerStatus() {
         HttpUtil.post("https://dnsapi.cn/Record.List",
@@ -54,7 +55,8 @@ public class MinecraftUtil {
                         modifyRecord(mainSrv);
                         broadcast("主线已恢复,更新解析记录 " + mainSrv);
                     }
-                    if (!mainServerOnline && serverSrvMap.get("ranmc.cc").equals(mainSrv)) {
+
+                    if (!mainServerOnline && serverSrvMap.get("ranmc.cc").equals(mainSrv) && !lastCheckStatus) {
                         String backupSrv = "";
                         for (String key : serverStatusMap.keySet()) {
                             if (serverStatusMap.get(key)) {
@@ -68,6 +70,8 @@ public class MinecraftUtil {
                         }
                         broadcast("检测到主线路离线," + backupServerInfo);
                     }
+
+                    lastCheckStatus = mainServerOnline;
                 });
     }
 

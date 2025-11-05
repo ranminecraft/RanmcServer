@@ -32,7 +32,7 @@ public class ChartHandler {
     private static long seasonLastUpdate = 0;
     private static final Map<String, Integer> seasonRows = new LinkedHashMap<>();
     private static long tpsLastUpdate = 0;
-    private static JSONArray tpsRows = new JSONArray();
+    private static final JSONArray tpsRows = new JSONArray();
     private static long pvpLastUpdate = 0;
     private static final Map<String, Integer> pvpRows = new LinkedHashMap<>();
 
@@ -147,8 +147,7 @@ public class ChartHandler {
         long now = System.currentTimeMillis();
         if (pvpLastUpdate + (6 * 60 * 60 * 1000) > now) return;
         pvpLastUpdate = now;
-        List<SQLRow> backupList = pvpData.selectList(SQLKey.FIGHT,
-                new SQLFilter().order("CAST(Point AS INT) DESC"));
+        List<SQLRow> backupList = pvpData.selectList(SQLKey.FIGHT, new SQLFilter());
         Map<String, Integer> countMap = new HashMap<>();
         for (SQLRow map : backupList) {
             int point = map.getInt(SQLKey.POINT, 0);
@@ -159,7 +158,7 @@ public class ChartHandler {
         }
         int emerable = countMap.getOrDefault("翡翠", 0);
         int chapion = 0;
-        if (emerable > 1) {
+        if (emerable >= 1) {
             emerable --;
             chapion = 1;
         }
