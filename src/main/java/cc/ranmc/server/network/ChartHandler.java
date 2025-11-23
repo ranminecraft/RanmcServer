@@ -131,7 +131,7 @@ public class ChartHandler {
         List<SQLRow> tpsList = tpsData.selectList("TPS",
                 new SQLFilter()
                         .order("CAST(ID AS INT) DESC")
-                        .limit(72));
+                        .limit(68));
         tpsRows.clear();
         for (SQLRow row : tpsList) {
             JSONObject obj = new JSONObject();
