@@ -72,7 +72,7 @@ public final class Main {
             public void run() {
                 MinecraftUtil.updateServerStatus();
             }
-        }, 0, 1000 * 60 * 5);
+        }, 0, 1000 * 60);
     }
 
 }
