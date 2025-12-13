@@ -117,7 +117,8 @@ public class ChartHandler {
                     .replace("头盔", "")
                     .replace("之甲", "")
                     .replace("护腿", "")
-                    .replace("之靴", "");
+                    .replace("之靴", "")
+                    .replace("之矛", "");
             if (!order.contains(name)) order.add(name);
             Integer count = (int) data.get(key);
             seasonRows.put(name, seasonRows.getOrDefault(name, 0) + count);
