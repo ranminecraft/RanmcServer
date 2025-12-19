@@ -37,7 +37,9 @@ public class MinecraftUtil {
                         JSONObject json = JSONObject.parseObject(record.toString());
                         String name = json.getString("name");
                         String srv = json.getString("value");
-                        if (name.startsWith("_minecraft._tcp.") && !name.contains("city")) {
+                        if (name.startsWith("_minecraft._tcp.")
+                                && !name.contains("bed")
+                                && !name.contains("city")) {
                             String serverName = name.replace("_minecraft._tcp.", "") + ".ranmc.cc";
                             serverStatusMap.put(serverName, isServerOnline(srv));
                             serverSrvMap.put(serverName, srv);
