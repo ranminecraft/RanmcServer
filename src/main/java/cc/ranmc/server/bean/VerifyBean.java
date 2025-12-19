@@ -9,6 +9,6 @@ public class VerifyBean {
     private String player;
     private String mode;
     private String key = "";
-    private long time = new Date().getTime() + (2 * 60 * 1000);
+    private long time = new Date().getTime() + (5 * 60 * 1000);
     private boolean pass = false;
 }
