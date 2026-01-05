@@ -112,6 +112,7 @@ public class MinecraftUtil {
         try {
             new MinecraftPing().getPing(new MinecraftPingOptions().setHostname(address).setPort(port));
         } catch (IOException e) {
+            e.printStackTrace();
             return false;
         }
         return true;

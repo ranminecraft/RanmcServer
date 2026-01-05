@@ -53,7 +53,7 @@ public class MinecraftPingUtil {
 
     /**
      * @author thinkofdeath
-     * See: https://gist.github.com/thinkofdeath/e975ddee04e9c87faf22
+     * See: <a href="https://gist.github.com/thinkofdeath/e975ddee04e9c87faf22">...</a>
      */
     public static int readVarInt(DataInputStream in) throws IOException {
         int i = 0;
@@ -75,8 +75,7 @@ public class MinecraftPingUtil {
 
     /**
      * @author thinkofdeath
-     * See: https://gist.github.com/thinkofdeath/e975ddee04e9c87faf22
-     * @throws IOException 
+     * See: <a href="https://gist.github.com/thinkofdeath/e975ddee04e9c87faf22">...</a>
      */
     public static void writeVarInt(DataOutputStream out, int paramInt) throws IOException {
         while (true) {

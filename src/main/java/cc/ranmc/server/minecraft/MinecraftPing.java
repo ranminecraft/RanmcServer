@@ -43,7 +43,6 @@ public class MinecraftPing {
      * 
      * @param hostname - a valid String hostname
      * @return {@link MinecraftPingReply}
-     * @throws IOException 
      */
     public String getPing(final String hostname) throws IOException {
         return this.getPing(new MinecraftPingOptions().setHostname(hostname));
@@ -54,7 +53,6 @@ public class MinecraftPing {
      * 
      * @param options - a filled instance of {@link MinecraftPingOptions}
      * @return {@link MinecraftPingReply}
-     * @throws IOException 
      */
     public String getPing(final MinecraftPingOptions options) throws IOException {
         MinecraftPingUtil.validate(options.getHostname(), "Hostname cannot be null.");

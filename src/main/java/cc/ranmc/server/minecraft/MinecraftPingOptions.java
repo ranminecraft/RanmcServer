@@ -28,9 +28,12 @@
  */
 package cc.ranmc.server.minecraft;
 
+import lombok.Getter;
+
 /**
  * Storage class for {@link MinecraftPing} options.
  */
+@Getter
 public class MinecraftPingOptions {
 
     private String hostname;
@@ -56,22 +59,6 @@ public class MinecraftPingOptions {
     public MinecraftPingOptions setCharset(String charset) {
         this.charset = charset;
         return this;
-    }
-
-    public String getHostname() {
-        return this.hostname;
-    }
-
-    public int getPort() {
-        return this.port;
-    }
-
-    public int getTimeout() {
-        return this.timeout;
-    }
-
-    public String getCharset() {
-        return this.charset;
     }
 
 }
