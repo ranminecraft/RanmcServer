@@ -16,7 +16,7 @@ import static cc.ranmc.server.network.BroadcastHandler.broadcast;
 public class MinecraftUtil {
 
     @Getter
-    private static final Map<String,Boolean> serverStatusMap = new TreeMap<>();
+    private static Map<String,Boolean> serverStatusMap = new TreeMap<>();
     private static final Map<String,String> serverSrvMap = new TreeMap<>();
     private static long recordId = 0;
     @Getter
@@ -31,8 +31,8 @@ public class MinecraftUtil {
                         Main.getLogger().warn("获取记录列表失败");
                         return;
                     }
-                    lastCheckTime = System.currentTimeMillis();
-                    serverStatusMap.clear();
+                    serverSrvMap.clear();
+                    Map<String,Boolean> newServerStatusMap = new TreeMap<>();
                     JSONObject.parseObject(body).getJSONArray("records").forEach(record -> {
                         JSONObject json = JSONObject.parseObject(record.toString());
                         String name = json.getString("name");
@@ -41,7 +41,7 @@ public class MinecraftUtil {
                                 && !name.contains("test")
                                 && !name.contains("city")) {
                             String serverName = name.replace("_minecraft._tcp.", "") + ".ranmc.cc";
-                            serverStatusMap.put(serverName, isServerOnline(srv));
+                            newServerStatusMap.put(serverName, isServerOnline(srv));
                             serverSrvMap.put(serverName, srv);
                         } else if (name.equals("_minecraft._tcp")) {
                             serverSrvMap.put("ranmc.cc", srv);
@@ -51,7 +51,7 @@ public class MinecraftUtil {
 
                     String mainSrv = ConfigUtil.CONFIG.getString("srv");
                     boolean mainServerOnline = isServerOnline(mainSrv);
-                    serverStatusMap.put("ranmc.cc", mainServerOnline);
+                    newServerStatusMap.put("ranmc.cc", mainServerOnline);
                     mainSrv += ".";
                     if (mainServerOnline && !serverSrvMap.get("ranmc.cc").equals(mainSrv)) {
                         modifyRecord(mainSrv);
@@ -60,8 +60,8 @@ public class MinecraftUtil {
 
                     if (!mainServerOnline && serverSrvMap.get("ranmc.cc").equals(mainSrv) && !lastCheckStatus) {
                         String backupSrv = "";
-                        for (String key : serverStatusMap.keySet()) {
-                            if (serverStatusMap.get(key)) {
+                        for (String key : newServerStatusMap.keySet()) {
+                            if (newServerStatusMap.get(key)) {
                                 backupSrv = serverSrvMap.get(key);
                             }
                         }
@@ -74,6 +74,8 @@ public class MinecraftUtil {
                     }
 
                     lastCheckStatus = mainServerOnline;
+                    lastCheckTime = System.currentTimeMillis();
+                    serverStatusMap = newServerStatusMap;
                 });
     }
 
