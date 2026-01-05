@@ -25,7 +25,7 @@ public class MinecraftUtil {
 
     public static void updateServerStatus() {
         HttpUtil.post("https://dnsapi.cn/Record.List",
-                "login_token=" + ConfigUtil.CONFIG.getString("dnspod") + "&domain=ranmc.cc&format=json",
+                "login_token=" + ConfigUtil.CONFIG.getString("dnspod") + "&domain=ranmc.cc&format=json&length=3000",
                 body -> {
                     if (!body.startsWith("{")) {
                         Main.getLogger().warn("获取记录列表失败");
